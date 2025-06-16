@@ -46,6 +46,14 @@ namespace BalgImport.Services
 
             var fileName = Path.GetFileName(arquivo.FileName);
             var filePath = Path.Combine(_uploadPath, fileName);
+
+            // Copia o conteúdo do arquivo para memória enquanto o stream ainda está disponível
+            byte[] fileBytes;
+            using (var ms = new MemoryStream())
+            {
+                await arquivo.CopyToAsync(ms);
+                fileBytes = ms.ToArray();
+            }
             
             var upload = new StatusUpload
             {
@@ -67,15 +75,6 @@ namespace BalgImport.Services
                 try
                 {
                     upload.Status = "UPLOADING";
-                    
-                    // Lê o arquivo para um array de bytes de forma segura
-                    byte[] fileBytes;
-                    using (var ms = new MemoryStream())
-                    {
-                        // Copia o arquivo para o MemoryStream
-                        await arquivo.OpenReadStream().CopyToAsync(ms);
-                        fileBytes = ms.ToArray();
-                    }
 
                     // Salva o arquivo usando o semáforo
                     await _fileLock.WaitAsync();
