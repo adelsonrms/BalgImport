@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BNv1dJZS2KP8W2wi3sefOmcFWIneHgBGOYxFNAnWv3I=",
+  "Hash": "vBnJAe0afk7OF550du4d/Dmvm7SyyyjMcfe4a4aO348=",
   "Source": "BalgImport",
   "BasePath": "_content/BalgImport",
   "Mode": "Default",
@@ -115,8 +115,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "oa2ngyywjs",
-      "Integrity": "oJwg802xeJixWBttQB0BXNpV5Sf06w2Q19Ax3QCnPpA=",
+      "Fingerprint": "enph21dluq",
+      "Integrity": "GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
@@ -1649,6 +1649,51 @@
       ]
     },
     {
+      "Route": "js/site.enph21dluq.js",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12093"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 16 Jun 2025 22:27:52 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "enph21dluq"
+        },
+        {
+          "Name": "label",
+          "Value": "js/site.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek="
+        }
+      ]
+    },
+    {
       "Route": "js/site.js",
       "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\site.js",
       "Selectors": [],
@@ -1659,7 +1704,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "11456"
+          "Value": "12093"
         },
         {
           "Name": "Content-Type",
@@ -1667,11 +1712,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"oJwg802xeJixWBttQB0BXNpV5Sf06w2Q19Ax3QCnPpA=\""
+          "Value": "\"GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 16 Jun 2025 21:20:31 GMT"
+          "Value": "Mon, 16 Jun 2025 22:27:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1681,52 +1726,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-oJwg802xeJixWBttQB0BXNpV5Sf06w2Q19Ax3QCnPpA="
-        }
-      ]
-    },
-    {
-      "Route": "js/site.oa2ngyywjs.js",
-      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\site.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "11456"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"oJwg802xeJixWBttQB0BXNpV5Sf06w2Q19Ax3QCnPpA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 16 Jun 2025 21:20:31 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "oa2ngyywjs"
-        },
-        {
-          "Name": "label",
-          "Value": "js/site.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-oJwg802xeJixWBttQB0BXNpV5Sf06w2Q19Ax3QCnPpA="
+          "Value": "sha256-GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek="
         }
       ]
     },
