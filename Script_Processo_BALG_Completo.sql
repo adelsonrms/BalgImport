@@ -221,3 +221,124 @@ SELECT * FROM dbo.T_CTRL_UPLOAD_BALG;
 SELECT * FROM dbo.T_LOG_PROCESSAMENTO;
 SELECT * FROM dbo.STG_BALG;
 SELECT * FROM dbo.T_PCONP_BASE_CONSL_ANLTCA;
+
+/*************************************************************
+ * 🏗️ ESTRATÉGIA DE PARTICIONAMENTO - SQL SERVER 2019
+ * Tabela: T_PCONP_BASE_CONSL_ANLTCA
+ * Particionamento por: D_BASE (Data da Base)
+ *************************************************************/
+
+---------------------------------------------------------------
+-- 1️⃣ Função de Particionamento (por Ano)
+---------------------------------------------------------------
+IF EXISTS (SELECT * FROM sys.partition_functions WHERE name = 'pfDataBase')
+    DROP PARTITION FUNCTION pfDataBase;
+GO
+
+CREATE PARTITION FUNCTION pfDataBase (DATE)
+AS RANGE LEFT FOR VALUES 
+(
+    '2022-12-31',
+    '2023-12-31',
+    '2024-12-31',
+    '2025-12-31',
+    '2026-12-31'
+);
+GO
+
+---------------------------------------------------------------
+-- 2️⃣ Esquema de Particionamento
+---------------------------------------------------------------
+IF EXISTS (SELECT * FROM sys.partition_schemes WHERE name = 'psDataBase')
+    DROP PARTITION SCHEME psDataBase;
+GO
+
+CREATE PARTITION SCHEME psDataBase
+AS PARTITION pfDataBase
+ALL TO ([PRIMARY]);
+GO
+
+---------------------------------------------------------------
+-- 3️⃣ Tabela Destino com Particionamento
+---------------------------------------------------------------
+IF OBJECT_ID('dbo.T_PCONP_BASE_CONSL_ANLTCA', 'U') IS NOT NULL
+    DROP TABLE dbo.T_PCONP_BASE_CONSL_ANLTCA;
+GO
+
+CREATE TABLE dbo.T_PCONP_BASE_CONSL_ANLTCA (
+    NOME_ARQUIVO VARCHAR(255),
+    CD_EMP VARCHAR(20),
+    CD_CONTA VARCHAR(50),
+    PRZ VARCHAR(10),
+    MOE VARCHAR(10),
+    SLD DECIMAL(25,2),
+    D_BASE DATE NOT NULL
+)
+ON psDataBase (D_BASE);
+GO
+
+---------------------------------------------------------------
+-- 🔍 4️⃣ Verificar Mapeamento das Partições
+---------------------------------------------------------------
+SELECT
+    ps.name AS PartitionScheme,
+    pf.name AS PartitionFunction,
+    p.partition_number,
+    prv.value AS RangeBoundary,
+    p.rows AS RowsInPartition
+FROM sys.indexes i
+INNER JOIN sys.partition_schemes ps ON i.data_space_id = ps.data_space_id
+INNER JOIN sys.partition_functions pf ON ps.function_id = pf.function_id
+INNER JOIN sys.partitions p ON i.object_id = p.object_id AND i.index_id <= 1
+LEFT JOIN sys.partition_range_values prv ON pf.function_id = prv.function_id AND p.partition_number = prv.boundary_id + 1
+WHERE i.object_id = OBJECT_ID('dbo.T_PCONP_BASE_CONSL_ANLTCA')
+ORDER BY p.partition_number;
+GO
+
+CREATE PROCEDURE dbo.SP_GERA_PARTICAO
+    @DataLimite DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM sys.partition_range_values prv
+        INNER JOIN sys.partition_functions pf ON prv.function_id = pf.function_id
+        WHERE pf.name = 'pfDataBase' AND prv.value = @DataLimite
+    )
+    BEGIN
+        PRINT 'Criando nova partição para ' + CAST(@DataLimite AS VARCHAR(20));
+        ALTER PARTITION FUNCTION pfDataBase()
+        SPLIT RANGE (@DataLimite);
+    END
+    ELSE
+    BEGIN
+        PRINT 'Partição para ' + CAST(@DataLimite AS VARCHAR(20)) + ' já existe.';
+    END
+END;
+GO
+
+CREATE PROCEDURE dbo.SP_REMOVE_PARTICAO
+    @DataLimite DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (
+        SELECT 1 
+        FROM sys.partition_range_values prv
+        INNER JOIN sys.partition_functions pf ON prv.function_id = pf.function_id
+        WHERE pf.name = 'pfDataBase' AND prv.value = @DataLimite
+    )
+    BEGIN
+        PRINT 'Removendo partição para ' + CAST(@DataLimite AS VARCHAR(20));
+        ALTER PARTITION FUNCTION pfDataBase()
+        MERGE RANGE (@DataLimite);
+    END
+    ELSE
+    BEGIN
+        PRINT 'Partição para ' + CAST(@DataLimite AS VARCHAR(20)) + ' não existe.';
+    END
+END;
+GO
