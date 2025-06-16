@@ -8,11 +8,24 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Controllers\HomeController.cs" />
+	  <Compile Remove="Controllers\UploadApiController.cs" />
+	  <Compile Remove="Controllers\UploadController.cs" />
+	  <Compile Remove="Services\TestDataGenerator.cs" />
+	  <Compile Remove="UploadService.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<!-- Dependência para SQL Server -->
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.3" />
 
 		<!-- Swagger (OpenAPI) -->
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Controllers\" />
+	  <Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>

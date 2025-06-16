@@ -67,7 +67,6 @@ F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\staticweb
 F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.BalgImport.props
 F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.BalgImport.props
 F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\staticwebassets.pack.json
-F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt
 F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\BalgImport.csproj.Up2Date
 F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\BalgImport.dll
 F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\refint\BalgImport.dll
@@ -75,3 +74,5 @@ F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\BalgImpor
 F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\BalgImport.pdb
 F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\BalgImport.genruntimeconfig.cache
 F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\ref\BalgImport.dll
+F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\BalgImport.sourcelink.json
+F:\Cloud\OneDrive\source\github\BalgImport\BalgImport\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt
