@@ -1,6 +1,7 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
-wwwroot\js\site.js
+wwwroot\js\DevonnoUploader.js
+wwwroot\js\testData.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap.min.css
@@ -58,3 +59,8 @@ wwwroot\lib\jquery-validation\LICENSE.md
 wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js
 wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js
 wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
+wwwroot\testData.html
+wwwroot\uploads\1001_PART_202401.CSV
+wwwroot\uploads\1001_PART_202404.CSV
+wwwroot\uploads\2002_BALG_202402.CSV
+wwwroot\uploads\2002_PART_202401.CSV

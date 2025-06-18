@@ -1,0 +1,143 @@
+@model BalgImport.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard de Importações";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4">Dashboard de Importações</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Lotes</h5>
+                    <h2 class="card-text" id="totalLotes">@Model.Indicadores.TotalLotes</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Arquivos</h5>
+                    <h2 class="card-text" id="totalArquivos">@Model.Indicadores.TotalArquivos</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Arquivos Processados</h5>
+                    <h2 class="card-text" id="arquivosProcessados">@Model.Indicadores.ArquivosProcessados</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Arquivos com Erro</h5>
+                    <h2 class="card-text" id="arquivosComErro">@Model.Indicadores.ArquivosComErro</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Lotes em Andamento</h5>
+                    <h2 class="card-text" id="lotesEmAndamento">@Model.Indicadores.LotesEmAndamento</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Lotes Concluídos</h5>
+                    <h2 class="card-text" id="lotesConcluidos">@Model.Indicadores.LotesConcluidos</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Lotes com Erro</h5>
+                    <h2 class="card-text" id="lotesComErro">@Model.Indicadores.LotesComErro</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Histórico de Importações</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data Criação</th>
+                            <th>Data Início</th>
+                            <th>Data Fim</th>
+                            <th>Usuário</th>
+                            <th>Status</th>
+                            <th>Total Arquivos</th>
+                            <th>Processados</th>
+                            <th>Erros</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lote in Model.Lotes)
+                        {
+                            <tr>
+                                <td>@lote.Id</td>
+                                <td>@lote.DataCriacao.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@(lote.DataInicio?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                                <td>@(lote.DataFim?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                                <td>@lote.UsuarioNome</td>
+                                <td>
+                                    <span class="badge @(lote.Status == "CONCLUIDO" ? "bg-success" : 
+                                                    lote.Status == "ERRO" ? "bg-danger" : 
+                                                    lote.Status == "PROCESSANDO" ? "bg-warning" : "bg-secondary")"
+                                          title="@lote.MensagemErro">
+                                        @(lote.Status == "CONCLUIDO" ? "Concluído" :
+                                          lote.Status == "ERRO" ? "Erro" :
+                                          lote.Status == "PROCESSANDO" ? "Em andamento" :
+                                          lote.Status == "CANCELADO" ? "Cancelado" : "Pendente")
+                                    </span>
+                                </td>
+                                <td>@lote.TotalArquivos</td>
+                                <td>@lote.ArquivosProcessados</td>
+                                <td>@lote.ArquivosComErro</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updateIndicadores() {
+            $.get('/Dashboard/GetIndicadores', function(response) {
+                if (response.success) {
+                    const data = response.data;
+                    $('#totalLotes').text(data.totalLotes);
+                    $('#totalArquivos').text(data.totalArquivos);
+                    $('#arquivosProcessados').text(data.arquivosProcessados);
+                    $('#arquivosComErro').text(data.arquivosComErro);
+                    $('#lotesEmAndamento').text(data.lotesEmAndamento);
+                    $('#lotesConcluidos').text(data.lotesConcluidos);
+                    $('#lotesComErro').text(data.lotesComErro);
+                }
+            });
+        }
+
+        // Atualiza os indicadores a cada 30 segundos
+        setInterval(updateIndicadores, 30000);
+    </script>
+} 

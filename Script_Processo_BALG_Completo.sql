@@ -342,3 +342,43 @@ BEGIN
     END
 END;
 GO
+
+CREATE OR ALTER PROCEDURE PROC_PROCESSA_BALG_TEMP
+    @ID_UPLOAD int,
+    @NOME_ARQUIVO varchar(255),
+    @TEMP_TABLE varchar(128)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        -- Insere na tabela final apenas os dados deste arquivo
+        INSERT INTO STG_BALG (
+            C_ID_UPLOAD, NOME_ARQUIVO, D_BASE, CD_EMP, CD_CONTA, 
+            PRZ, MOE, SLD, FLAG_ERRO, MENSAGEM_ERRO, DT_IMPORTACAO
+        )
+        SELECT 
+            C_ID_UPLOAD, NOME_ARQUIVO, D_BASE, CD_EMP, CD_CONTA, 
+            PRZ, MOE, SLD, FLAG_ERRO, MENSAGEM_ERRO, DT_IMPORTACAO
+        FROM #STG_BALG_@ID_UPLOAD_@TEMP_TABLE;
+
+        -- Atualiza o status do upload
+        UPDATE UPLOAD_ARQUIVOS 
+        SET STATUS = 'FINALIZADO',
+            DT_FIM = GETDATE()
+        WHERE ID_UPLOAD = @ID_UPLOAD 
+        AND NOME_ARQUIVO = @NOME_ARQUIVO;
+
+    END TRY
+    BEGIN CATCH
+        -- Em caso de erro, marca o upload como com erro
+        UPDATE UPLOAD_ARQUIVOS 
+        SET STATUS = 'ERRO',
+            DT_FIM = GETDATE(),
+            MENSAGEM_ERRO = ERROR_MESSAGE()
+        WHERE ID_UPLOAD = @ID_UPLOAD 
+        AND NOME_ARQUIVO = @NOME_ARQUIVO;
+
+        THROW;
+    END CATCH
+END

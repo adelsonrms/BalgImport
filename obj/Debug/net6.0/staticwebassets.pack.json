@@ -13,8 +13,12 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
+      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\DevonnoUploader.js",
+      "PackagePath": "staticwebassets\\js\\DevonnoUploader.js"
+    },
+    {
+      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\testData.js",
+      "PackagePath": "staticwebassets\\js\\testData.js"
     },
     {
       "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\lib\\bootstrap\\LICENSE",
@@ -243,6 +247,26 @@
     {
       "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\testData.html",
+      "PackagePath": "staticwebassets\\testData.html"
+    },
+    {
+      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1001_PART_202401.CSV",
+      "PackagePath": "staticwebassets\\uploads\\1001_PART_202401.CSV"
+    },
+    {
+      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1001_PART_202404.CSV",
+      "PackagePath": "staticwebassets\\uploads\\1001_PART_202404.CSV"
+    },
+    {
+      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\2002_BALG_202402.CSV",
+      "PackagePath": "staticwebassets\\uploads\\2002_BALG_202402.CSV"
+    },
+    {
+      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\2002_PART_202401.CSV",
+      "PackagePath": "staticwebassets\\uploads\\2002_PART_202401.CSV"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.BalgImport.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

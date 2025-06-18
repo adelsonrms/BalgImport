@@ -1,141 +1,18 @@
 [
   {
-    "ContainingType": "BalgImport.Controllers.Api.UploadApiController",
-    "Method": "DownloadFile",
-    "RelativePath": "api/upload/download/{fileName}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "fileName",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BalgImport.Controllers.Api.UploadApiController",
-    "Method": "GerarArquivosTeste",
-    "RelativePath": "api/upload/gerararquivosteste",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BalgImport.Controllers.Api.UploadApiController",
-    "Method": "GetAllBatches",
-    "RelativePath": "api/upload/getallbatches",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[BalgImport.Models.UploadBatch, BalgImport, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "BalgImport.Controllers.Api.UploadApiController",
-    "Method": "GetFile",
-    "RelativePath": "api/upload/getfile/{fileName}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "fileName",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BalgImport.Controllers.Api.UploadApiController",
-    "Method": "GetBatchStatus",
-    "RelativePath": "api/upload/getstatus/{batchId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "batchId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "BalgImport.Models.UploadBatch",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "BalgImport.Controllers.Api.UploadApiController",
-    "Method": "IniciarNovoBatch",
-    "RelativePath": "api/upload/startbatch",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Guid",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "BalgImport.Controllers.Api.UploadApiController",
-    "Method": "UploadFile",
-    "RelativePath": "api/upload/uploadfile",
+    "ContainingType": "Projeto_BALG_Import.Controllers.ImportacaoApiController",
+    "Method": "UploadArquivos",
+    "RelativePath": "api/ImportacaoApi/upload",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "file",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "batchId",
-        "Type": "System.Guid",
+        "Name": "arquivos",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile[]",
         "IsRequired": false
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "BalgImport.Models.StatusUpload",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   }
 ]

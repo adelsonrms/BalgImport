@@ -1,26 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BalgImport.Models
 {
     public class UploadBatch
     {
-        public Guid Id { get; set; }
-        public DateTime DataCriacao { get; set; }
-        public DateTime? DataFinalizacao { get; set; }
-        public string Status { get; set; }
-        public int TotalArquivos { get; set; }
-        public int ArquivosProcessados { get; set; }
-        public int ArquivosComErro { get; set; }
-        public List<StatusUpload> Arquivos { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public string UsuarioId { get; set; }
+        public string UsuarioNome { get; set; }
+        public DateTime DataCriacao { get; set; } = DateTime.Now;
+        public string Status { get; set; } = "PENDENTE";
+        public DateTime DataInicio { get; set; }
+        public DateTime? DataFim { get; set; }
+        public List<UploadStatus> Arquivos { get; set; } = new List<UploadStatus>();
         public string? MensagemErro { get; set; }
+        public int TotalArquivos => Arquivos.Count;
+        public int ArquivosProcessados => Arquivos.Count(a => a.Status == "CONCLUIDO");
+        public int ArquivosComErro => Arquivos.Count(a => a.Status == "ERRO");
 
         public UploadBatch()
         {
-            Id = Guid.NewGuid();
-            DataCriacao = DateTime.Now;
             Status = "PENDENTE";
-            Arquivos = new List<StatusUpload>();
         }
     }
 } 

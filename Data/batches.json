@@ -1,0 +1,1448 @@
+[
+  {
+    "Id": "bb75d1e0-579a-4c2a-a216-82863d1e69cf",
+    "UsuarioId": null,
+    "UsuarioNome": null,
+    "DataCriacao": "2025-06-16T22:05:44.4055742-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T22:05:44.4055768-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_BALG_202404.CSV",
+        "Tamanho": 20595,
+        "Status": "CONCLUIDO",
+        "Hash": "6562f3f2b6f15b7e33bd6196463b487c6683f5c8785a1c9dd733f547eeba26aa",
+        "DataInicio": "2025-06-16T22:05:44.4932326-03:00",
+        "DataFim": "2025-06-16T22:05:44.5126243-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202405.CSV",
+        "Tamanho": 105836,
+        "Status": "CONCLUIDO",
+        "Hash": "4fc094a5f9dcc2e684a059c29fd3c94382a216d00e2e5635c25137f83928a8b3",
+        "DataInicio": "2025-06-16T22:05:44.5787928-03:00",
+        "DataFim": "2025-06-16T22:05:44.5887388-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202401.CSV",
+        "Tamanho": 53834,
+        "Status": "CONCLUIDO",
+        "Hash": "91d28ba99dbaaf85ef8dec3bc3e426f1ce388448607024cf451f926ad8edeebc",
+        "DataInicio": "2025-06-16T22:05:44.6224157-03:00",
+        "DataFim": "2025-06-16T22:05:44.6327723-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202404.CSV",
+        "Tamanho": 49337,
+        "Status": "CONCLUIDO",
+        "Hash": "bf55e70c59494cadd4df8d05d50c2c46fc305b0621c73f9e261efe44259239a3",
+        "DataInicio": "2025-06-16T22:05:44.6785609-03:00",
+        "DataFim": "2025-06-16T22:05:44.6868682-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202401.CSV",
+        "Tamanho": 9294,
+        "Status": "CONCLUIDO",
+        "Hash": "e1c12fcd692f56bf9894c14f51002c28d35b89c57791d247e0d169930f20b0a7",
+        "DataInicio": "2025-06-16T22:05:44.7249129-03:00",
+        "DataFim": "2025-06-16T22:05:44.7355791-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 5,
+    "ArquivosProcessados": 5,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "0ac6a751-f717-4747-8112-cef50d466c45",
+    "UsuarioId": null,
+    "UsuarioNome": null,
+    "DataCriacao": "2025-06-16T22:14:01.4985966-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T22:14:01.4985996-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_BALG_202401.CSV",
+        "Tamanho": 119191,
+        "Status": "CONCLUIDO",
+        "Hash": "c56b68bb2b84ea9da76b73a1f96d14877350c67cb59b77a55accfcd478c29b66",
+        "DataInicio": "2025-06-16T22:14:01.6376165-03:00",
+        "DataFim": "2025-06-16T22:14:01.6579604-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202404.CSV",
+        "Tamanho": 20595,
+        "Status": "CONCLUIDO",
+        "Hash": "6562f3f2b6f15b7e33bd6196463b487c6683f5c8785a1c9dd733f547eeba26aa",
+        "DataInicio": "2025-06-16T22:14:01.7073936-03:00",
+        "DataFim": "2025-06-16T22:14:01.7223554-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202405.CSV",
+        "Tamanho": 105836,
+        "Status": "CONCLUIDO",
+        "Hash": "4fc094a5f9dcc2e684a059c29fd3c94382a216d00e2e5635c25137f83928a8b3",
+        "DataInicio": "2025-06-16T22:14:01.815031-03:00",
+        "DataFim": "2025-06-16T22:14:01.8282978-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202401.CSV",
+        "Tamanho": 53834,
+        "Status": "CONCLUIDO",
+        "Hash": "91d28ba99dbaaf85ef8dec3bc3e426f1ce388448607024cf451f926ad8edeebc",
+        "DataInicio": "2025-06-16T22:14:01.8860807-03:00",
+        "DataFim": "2025-06-16T22:14:01.9038763-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202404.CSV",
+        "Tamanho": 49337,
+        "Status": "CONCLUIDO",
+        "Hash": "bf55e70c59494cadd4df8d05d50c2c46fc305b0621c73f9e261efe44259239a3",
+        "DataInicio": "2025-06-16T22:14:01.9492675-03:00",
+        "DataFim": "2025-06-16T22:14:01.9609268-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202401.CSV",
+        "Tamanho": 9294,
+        "Status": "CONCLUIDO",
+        "Hash": "e1c12fcd692f56bf9894c14f51002c28d35b89c57791d247e0d169930f20b0a7",
+        "DataInicio": "2025-06-16T22:14:02.0076324-03:00",
+        "DataFim": "2025-06-16T22:14:02.0199075-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202402.CSV",
+        "Tamanho": 16622,
+        "Status": "CONCLUIDO",
+        "Hash": "1d14091930cd5e313f30b2a098a449f99a7d6b8081816318c4c10e072a107411",
+        "DataInicio": "2025-06-16T22:14:02.0626915-03:00",
+        "DataFim": "2025-06-16T22:14:02.0789508-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202401.CSV",
+        "Tamanho": 52876,
+        "Status": "CONCLUIDO",
+        "Hash": "c56761b5f8414b46d57c8eac445112d221f8cb729ce8bd9694793c74a8f4fa47",
+        "DataInicio": "2025-06-16T22:14:02.1249964-03:00",
+        "DataFim": "2025-06-16T22:14:02.1373678-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 8,
+    "ArquivosProcessados": 8,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "227ad5f1-fa1a-4b3e-a1ac-20c62ea3020f",
+    "UsuarioId": null,
+    "UsuarioNome": null,
+    "DataCriacao": "2025-06-16T22:21:10.1734537-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T22:21:10.1734568-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_PART_202404.CSV",
+        "Tamanho": 49337,
+        "Status": "CONCLUIDO",
+        "Hash": "bf55e70c59494cadd4df8d05d50c2c46fc305b0621c73f9e261efe44259239a3",
+        "DataInicio": "2025-06-16T22:21:10.3131848-03:00",
+        "DataFim": "2025-06-16T22:21:10.3333081-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202401.CSV",
+        "Tamanho": 9294,
+        "Status": "CONCLUIDO",
+        "Hash": "e1c12fcd692f56bf9894c14f51002c28d35b89c57791d247e0d169930f20b0a7",
+        "DataInicio": "2025-06-16T22:21:10.3759701-03:00",
+        "DataFim": "2025-06-16T22:21:10.3884439-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202402.CSV",
+        "Tamanho": 16622,
+        "Status": "CONCLUIDO",
+        "Hash": "1d14091930cd5e313f30b2a098a449f99a7d6b8081816318c4c10e072a107411",
+        "DataInicio": "2025-06-16T22:21:10.4293073-03:00",
+        "DataFim": "2025-06-16T22:21:10.4410185-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202401.CSV",
+        "Tamanho": 52876,
+        "Status": "CONCLUIDO",
+        "Hash": "c56761b5f8414b46d57c8eac445112d221f8cb729ce8bd9694793c74a8f4fa47",
+        "DataInicio": "2025-06-16T22:21:10.519336-03:00",
+        "DataFim": "2025-06-16T22:21:10.5332575-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202402.CSV",
+        "Tamanho": 23844,
+        "Status": "CONCLUIDO",
+        "Hash": "38bef35a0323549dbd28c6347fe8a8d94630e4e7b5a1c7e6996bbb32e1d7d4d3",
+        "DataInicio": "2025-06-16T22:21:10.579462-03:00",
+        "DataFim": "2025-06-16T22:21:10.5912701-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202403.CSV",
+        "Tamanho": 76113,
+        "Status": "CONCLUIDO",
+        "Hash": "c7962a43f47a9eb05e435f91497a204ac1b8e9514161f9f89ad1e14a5ded5831",
+        "DataInicio": "2025-06-16T22:21:10.6513432-03:00",
+        "DataFim": "2025-06-16T22:21:10.6613477-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202404.CSV",
+        "Tamanho": 68137,
+        "Status": "CONCLUIDO",
+        "Hash": "f2100b4a6c7827a6994cdc16a2b44acda04786c2dc1cccf6e2122e463504b0e6",
+        "DataInicio": "2025-06-16T22:21:10.7102646-03:00",
+        "DataFim": "2025-06-16T22:21:10.7210343-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202405.CSV",
+        "Tamanho": 55620,
+        "Status": "CONCLUIDO",
+        "Hash": "611cdf97a7be0164591b55588f405ed45c0f7183eec3e28b7c445a7fa2e829e0",
+        "DataInicio": "2025-06-16T22:21:10.7603938-03:00",
+        "DataFim": "2025-06-16T22:21:10.7722311-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202401.CSV",
+        "Tamanho": 81724,
+        "Status": "CONCLUIDO",
+        "Hash": "f73ae7dd0f8d3f89026fb462fca3eed8e95581921c69d952951ae89a7613ee45",
+        "DataInicio": "2025-06-16T22:21:10.8168766-03:00",
+        "DataFim": "2025-06-16T22:21:10.833918-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202402.CSV",
+        "Tamanho": 19991,
+        "Status": "CONCLUIDO",
+        "Hash": "a919f82a200c6e04a740987493cf30714817b6b9338f224fcc2c700d89ba3a76",
+        "DataInicio": "2025-06-16T22:21:10.8757006-03:00",
+        "DataFim": "2025-06-16T22:21:10.8888118-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202403.CSV",
+        "Tamanho": 69340,
+        "Status": "CONCLUIDO",
+        "Hash": "d858efb0eab6da1d822e3e759c4d8a3d299297fbca8a4cbc75bc24fe08ea1156",
+        "DataInicio": "2025-06-16T22:21:10.9407819-03:00",
+        "DataFim": "2025-06-16T22:21:10.9562434-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202404.CSV",
+        "Tamanho": 50468,
+        "Status": "CONCLUIDO",
+        "Hash": "433ed755d5c6aaf411ee937c0a5a8a772e3f665be1540f4681f62dbc6aa33400",
+        "DataInicio": "2025-06-16T22:21:10.9994878-03:00",
+        "DataFim": "2025-06-16T22:21:11.019181-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202401.CSV",
+        "Tamanho": 15208,
+        "Status": "CONCLUIDO",
+        "Hash": "0d2681e5e9709077883990fe2cea5db3131997ff9b7fb3e3ddeba82f7d2538b3",
+        "DataInicio": "2025-06-16T22:21:11.0681584-03:00",
+        "DataFim": "2025-06-16T22:21:11.0792767-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202402.CSV",
+        "Tamanho": 46846,
+        "Status": "CONCLUIDO",
+        "Hash": "736c7ee525cb3b34274ff0b7ba4cc3286d51135c6c70e53fa25af74ce9389d63",
+        "DataInicio": "2025-06-16T22:21:11.1377249-03:00",
+        "DataFim": "2025-06-16T22:21:11.1539206-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202403.CSV",
+        "Tamanho": 11894,
+        "Status": "CONCLUIDO",
+        "Hash": "b9a66a5ccc42172ea21c7d9f8051344c07978930e6c3076a61c5b3c5116d7a26",
+        "DataInicio": "2025-06-16T22:21:11.2214868-03:00",
+        "DataFim": "2025-06-16T22:21:11.2550223-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 15,
+    "ArquivosProcessados": 15,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "6d56730f-9d85-4f04-b2aa-ba305400f9c5",
+    "UsuarioId": null,
+    "UsuarioNome": null,
+    "DataCriacao": "2025-06-16T22:38:42.7640786-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T22:38:42.7640815-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_BALG_202401.CSV",
+        "Tamanho": 119191,
+        "Status": "CONCLUIDO",
+        "Hash": "c56b68bb2b84ea9da76b73a1f96d14877350c67cb59b77a55accfcd478c29b66",
+        "DataInicio": "2025-06-16T22:38:42.9327847-03:00",
+        "DataFim": "2025-06-16T22:38:42.9592817-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202404.CSV",
+        "Tamanho": 20595,
+        "Status": "CONCLUIDO",
+        "Hash": "6562f3f2b6f15b7e33bd6196463b487c6683f5c8785a1c9dd733f547eeba26aa",
+        "DataInicio": "2025-06-16T22:38:43.0035639-03:00",
+        "DataFim": "2025-06-16T22:38:43.0146552-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202405.CSV",
+        "Tamanho": 105836,
+        "Status": "CONCLUIDO",
+        "Hash": "4fc094a5f9dcc2e684a059c29fd3c94382a216d00e2e5635c25137f83928a8b3",
+        "DataInicio": "2025-06-16T22:38:43.0794144-03:00",
+        "DataFim": "2025-06-16T22:38:43.0913166-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202401.CSV",
+        "Tamanho": 53834,
+        "Status": "CONCLUIDO",
+        "Hash": "91d28ba99dbaaf85ef8dec3bc3e426f1ce388448607024cf451f926ad8edeebc",
+        "DataInicio": "2025-06-16T22:38:43.1350327-03:00",
+        "DataFim": "2025-06-16T22:38:43.1486967-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202404.CSV",
+        "Tamanho": 49337,
+        "Status": "CONCLUIDO",
+        "Hash": "bf55e70c59494cadd4df8d05d50c2c46fc305b0621c73f9e261efe44259239a3",
+        "DataInicio": "2025-06-16T22:38:43.2059385-03:00",
+        "DataFim": "2025-06-16T22:38:43.2226962-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202401.CSV",
+        "Tamanho": 9294,
+        "Status": "CONCLUIDO",
+        "Hash": "e1c12fcd692f56bf9894c14f51002c28d35b89c57791d247e0d169930f20b0a7",
+        "DataInicio": "2025-06-16T22:38:43.2683424-03:00",
+        "DataFim": "2025-06-16T22:38:43.2823539-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202402.CSV",
+        "Tamanho": 16622,
+        "Status": "CONCLUIDO",
+        "Hash": "1d14091930cd5e313f30b2a098a449f99a7d6b8081816318c4c10e072a107411",
+        "DataInicio": "2025-06-16T22:38:43.3339317-03:00",
+        "DataFim": "2025-06-16T22:38:43.3475067-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202401.CSV",
+        "Tamanho": 52876,
+        "Status": "CONCLUIDO",
+        "Hash": "c56761b5f8414b46d57c8eac445112d221f8cb729ce8bd9694793c74a8f4fa47",
+        "DataInicio": "2025-06-16T22:38:43.3935044-03:00",
+        "DataFim": "2025-06-16T22:38:43.410882-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202402.CSV",
+        "Tamanho": 23844,
+        "Status": "CONCLUIDO",
+        "Hash": "38bef35a0323549dbd28c6347fe8a8d94630e4e7b5a1c7e6996bbb32e1d7d4d3",
+        "DataInicio": "2025-06-16T22:38:43.4594793-03:00",
+        "DataFim": "2025-06-16T22:38:43.4732864-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202403.CSV",
+        "Tamanho": 76113,
+        "Status": "CONCLUIDO",
+        "Hash": "c7962a43f47a9eb05e435f91497a204ac1b8e9514161f9f89ad1e14a5ded5831",
+        "DataInicio": "2025-06-16T22:38:43.5281601-03:00",
+        "DataFim": "2025-06-16T22:38:43.5504285-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202404.CSV",
+        "Tamanho": 68137,
+        "Status": "CONCLUIDO",
+        "Hash": "f2100b4a6c7827a6994cdc16a2b44acda04786c2dc1cccf6e2122e463504b0e6",
+        "DataInicio": "2025-06-16T22:38:43.6051163-03:00",
+        "DataFim": "2025-06-16T22:38:43.6225243-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202405.CSV",
+        "Tamanho": 55620,
+        "Status": "CONCLUIDO",
+        "Hash": "611cdf97a7be0164591b55588f405ed45c0f7183eec3e28b7c445a7fa2e829e0",
+        "DataInicio": "2025-06-16T22:38:43.6872382-03:00",
+        "DataFim": "2025-06-16T22:38:43.7070909-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202401.CSV",
+        "Tamanho": 81724,
+        "Status": "CONCLUIDO",
+        "Hash": "f73ae7dd0f8d3f89026fb462fca3eed8e95581921c69d952951ae89a7613ee45",
+        "DataInicio": "2025-06-16T22:38:43.7665111-03:00",
+        "DataFim": "2025-06-16T22:38:43.7813153-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202402.CSV",
+        "Tamanho": 19991,
+        "Status": "CONCLUIDO",
+        "Hash": "a919f82a200c6e04a740987493cf30714817b6b9338f224fcc2c700d89ba3a76",
+        "DataInicio": "2025-06-16T22:38:43.8441922-03:00",
+        "DataFim": "2025-06-16T22:38:43.8589302-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202403.CSV",
+        "Tamanho": 69340,
+        "Status": "CONCLUIDO",
+        "Hash": "d858efb0eab6da1d822e3e759c4d8a3d299297fbca8a4cbc75bc24fe08ea1156",
+        "DataInicio": "2025-06-16T22:38:43.9151796-03:00",
+        "DataFim": "2025-06-16T22:38:43.9298138-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202404.CSV",
+        "Tamanho": 50468,
+        "Status": "CONCLUIDO",
+        "Hash": "433ed755d5c6aaf411ee937c0a5a8a772e3f665be1540f4681f62dbc6aa33400",
+        "DataInicio": "2025-06-16T22:38:43.9697044-03:00",
+        "DataFim": "2025-06-16T22:38:43.9835732-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202401.CSV",
+        "Tamanho": 15208,
+        "Status": "CONCLUIDO",
+        "Hash": "0d2681e5e9709077883990fe2cea5db3131997ff9b7fb3e3ddeba82f7d2538b3",
+        "DataInicio": "2025-06-16T22:38:44.0265952-03:00",
+        "DataFim": "2025-06-16T22:38:44.0414184-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202402.CSV",
+        "Tamanho": 46846,
+        "Status": "CONCLUIDO",
+        "Hash": "736c7ee525cb3b34274ff0b7ba4cc3286d51135c6c70e53fa25af74ce9389d63",
+        "DataInicio": "2025-06-16T22:38:44.0905909-03:00",
+        "DataFim": "2025-06-16T22:38:44.104043-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202403.CSV",
+        "Tamanho": 11894,
+        "Status": "CONCLUIDO",
+        "Hash": "b9a66a5ccc42172ea21c7d9f8051344c07978930e6c3076a61c5b3c5116d7a26",
+        "DataInicio": "2025-06-16T22:38:44.1474727-03:00",
+        "DataFim": "2025-06-16T22:38:44.1598608-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202405.CSV",
+        "Tamanho": 50284,
+        "Status": "CONCLUIDO",
+        "Hash": "99a102fae0f56f23bf513b6c438ff3b538686416f836b86e5595874f41e871a3",
+        "DataInicio": "2025-06-16T22:38:44.2062953-03:00",
+        "DataFim": "2025-06-16T22:38:44.2202449-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202403.CSV",
+        "Tamanho": 37037,
+        "Status": "CONCLUIDO",
+        "Hash": "8c843cdb645855fce5fa58e5e3e2d56b621a9fa55f7959d7250474f704c93849",
+        "DataInicio": "2025-06-16T22:38:44.2692647-03:00",
+        "DataFim": "2025-06-16T22:38:44.2855573-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202404.CSV",
+        "Tamanho": 62327,
+        "Status": "CONCLUIDO",
+        "Hash": "7da79cab9632344b335a14ed2494b4f49ff90e110b5b7b6e8a3a954103f07536",
+        "DataInicio": "2025-06-16T22:38:44.3370957-03:00",
+        "DataFim": "2025-06-16T22:38:44.3495813-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202405.CSV",
+        "Tamanho": 23205,
+        "Status": "CONCLUIDO",
+        "Hash": "731522415a24d3244ad5c5dfbb0b4b9b09b1e67710bd0e859b231b33bdc9aca7",
+        "DataInicio": "2025-06-16T22:38:44.3948654-03:00",
+        "DataFim": "2025-06-16T22:38:44.4127632-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_PART_202401.CSV",
+        "Tamanho": 91612,
+        "Status": "CONCLUIDO",
+        "Hash": "445e8b6f61e969c3ae367e77e75eef2903021f5dece8a4ffce34f27e52a7d354",
+        "DataInicio": "2025-06-16T22:38:44.4666029-03:00",
+        "DataFim": "2025-06-16T22:38:44.4872021-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_PART_202403.CSV",
+        "Tamanho": 30138,
+        "Status": "CONCLUIDO",
+        "Hash": "0daebd7c7cbfaba9808109ffba64a32fefe7bc821a3d291e6951d73fecc44ce1",
+        "DataInicio": "2025-06-16T22:38:44.5546323-03:00",
+        "DataFim": "2025-06-16T22:38:44.5710215-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_BALG_202401.CSV",
+        "Tamanho": 29617,
+        "Status": "CONCLUIDO",
+        "Hash": "3566a14db305ae103d0b7cc210a7b5afb280d5aa372d3b48c18e35ade5d4c1af",
+        "DataInicio": "2025-06-16T22:38:44.6378937-03:00",
+        "DataFim": "2025-06-16T22:38:44.6540888-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_BALG_202403.CSV",
+        "Tamanho": 58101,
+        "Status": "CONCLUIDO",
+        "Hash": "93d9af94516714f4fec7315f9ca36051106d88ceb7058cfa633c48a0efd45811",
+        "DataInicio": "2025-06-16T22:38:44.7149908-03:00",
+        "DataFim": "2025-06-16T22:38:44.7348171-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_BALG_202405.CSV",
+        "Tamanho": 37058,
+        "Status": "CONCLUIDO",
+        "Hash": "ba215f9b56cd1d5f214ce0c827fa8a2ea8cc6309a4c5a2eaadec608c78d73fdc",
+        "DataInicio": "2025-06-16T22:38:44.8121622-03:00",
+        "DataFim": "2025-06-16T22:38:44.8334216-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_PART_202401.CSV",
+        "Tamanho": 119339,
+        "Status": "CONCLUIDO",
+        "Hash": "61774a2f4c136eb00506efb0bb1707cb27cfb8e8bed18e4f461bf414a72e60e8",
+        "DataInicio": "2025-06-16T22:38:44.9105995-03:00",
+        "DataFim": "2025-06-16T22:38:44.9419035-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_PART_202402.CSV",
+        "Tamanho": 42113,
+        "Status": "CONCLUIDO",
+        "Hash": "c72398161ce68ec353459f4b823c4f073adb8ee162385f0a7c0af9cb1dff952c",
+        "DataInicio": "2025-06-16T22:38:44.9939428-03:00",
+        "DataFim": "2025-06-16T22:38:45.0108964-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_PART_202403.CSV",
+        "Tamanho": 30484,
+        "Status": "CONCLUIDO",
+        "Hash": "dc88f506a5955360777f078ca39268356f275280300206ac8badc451a2173c6f",
+        "DataInicio": "2025-06-16T22:38:45.058339-03:00",
+        "DataFim": "2025-06-16T22:38:45.0715038-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_PART_202404.CSV",
+        "Tamanho": 117532,
+        "Status": "CONCLUIDO",
+        "Hash": "c612014ac844334d7a72215af1f36f494106b37c8c460ca2b61eaa6789fe3387",
+        "DataInicio": "2025-06-16T22:38:45.1162754-03:00",
+        "DataFim": "2025-06-16T22:38:45.133269-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 32,
+    "ArquivosProcessados": 32,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "8b56270f-5386-4a64-9782-3e5e24adc097",
+    "UsuarioId": null,
+    "UsuarioNome": null,
+    "DataCriacao": "2025-06-16T22:53:33.7988852-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T22:53:33.7990928-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_BALG_202401.CSV",
+        "Tamanho": 119191,
+        "Status": "CONCLUIDO",
+        "Hash": "c56b68bb2b84ea9da76b73a1f96d14877350c67cb59b77a55accfcd478c29b66",
+        "DataInicio": "2025-06-16T22:53:34.0382596-03:00",
+        "DataFim": "2025-06-16T22:53:34.0435878-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202404.CSV",
+        "Tamanho": 20595,
+        "Status": "CONCLUIDO",
+        "Hash": "6562f3f2b6f15b7e33bd6196463b487c6683f5c8785a1c9dd733f547eeba26aa",
+        "DataInicio": "2025-06-16T22:53:34.0679611-03:00",
+        "DataFim": "2025-06-16T22:53:34.0682122-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202405.CSV",
+        "Tamanho": 105836,
+        "Status": "CONCLUIDO",
+        "Hash": "4fc094a5f9dcc2e684a059c29fd3c94382a216d00e2e5635c25137f83928a8b3",
+        "DataInicio": "2025-06-16T22:53:34.1050161-03:00",
+        "DataFim": "2025-06-16T22:53:34.10671-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202401.CSV",
+        "Tamanho": 53834,
+        "Status": "CONCLUIDO",
+        "Hash": "91d28ba99dbaaf85ef8dec3bc3e426f1ce388448607024cf451f926ad8edeebc",
+        "DataInicio": "2025-06-16T22:53:34.1501897-03:00",
+        "DataFim": "2025-06-16T22:53:34.1505416-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202404.CSV",
+        "Tamanho": 49337,
+        "Status": "CONCLUIDO",
+        "Hash": "bf55e70c59494cadd4df8d05d50c2c46fc305b0621c73f9e261efe44259239a3",
+        "DataInicio": "2025-06-16T22:53:34.1729038-03:00",
+        "DataFim": "2025-06-16T22:53:34.1737572-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 5,
+    "ArquivosProcessados": 5,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "13b4d922-592e-4733-9019-7f5351f41103",
+    "UsuarioId": null,
+    "UsuarioNome": null,
+    "DataCriacao": "2025-06-16T22:53:51.4420443-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T22:53:51.4420469-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_BALG_202401.CSV",
+        "Tamanho": 119191,
+        "Status": "CONCLUIDO",
+        "Hash": "c56b68bb2b84ea9da76b73a1f96d14877350c67cb59b77a55accfcd478c29b66",
+        "DataInicio": "2025-06-16T22:53:51.4654683-03:00",
+        "DataFim": "2025-06-16T22:53:51.4666901-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202404.CSV",
+        "Tamanho": 20595,
+        "Status": "CONCLUIDO",
+        "Hash": "6562f3f2b6f15b7e33bd6196463b487c6683f5c8785a1c9dd733f547eeba26aa",
+        "DataInicio": "2025-06-16T22:53:51.4868008-03:00",
+        "DataFim": "2025-06-16T22:53:51.4869634-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202405.CSV",
+        "Tamanho": 105836,
+        "Status": "CONCLUIDO",
+        "Hash": "4fc094a5f9dcc2e684a059c29fd3c94382a216d00e2e5635c25137f83928a8b3",
+        "DataInicio": "2025-06-16T22:53:51.5208915-03:00",
+        "DataFim": "2025-06-16T22:53:51.5223564-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202401.CSV",
+        "Tamanho": 53834,
+        "Status": "CONCLUIDO",
+        "Hash": "91d28ba99dbaaf85ef8dec3bc3e426f1ce388448607024cf451f926ad8edeebc",
+        "DataInicio": "2025-06-16T22:53:51.5429709-03:00",
+        "DataFim": "2025-06-16T22:53:51.5435532-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202404.CSV",
+        "Tamanho": 49337,
+        "Status": "CONCLUIDO",
+        "Hash": "bf55e70c59494cadd4df8d05d50c2c46fc305b0621c73f9e261efe44259239a3",
+        "DataInicio": "2025-06-16T22:53:51.5758969-03:00",
+        "DataFim": "2025-06-16T22:53:51.5763658-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202401.CSV",
+        "Tamanho": 9294,
+        "Status": "CONCLUIDO",
+        "Hash": "e1c12fcd692f56bf9894c14f51002c28d35b89c57791d247e0d169930f20b0a7",
+        "DataInicio": "2025-06-16T22:53:51.5966146-03:00",
+        "DataFim": "2025-06-16T22:53:51.5967638-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202402.CSV",
+        "Tamanho": 16622,
+        "Status": "CONCLUIDO",
+        "Hash": "1d14091930cd5e313f30b2a098a449f99a7d6b8081816318c4c10e072a107411",
+        "DataInicio": "2025-06-16T22:53:51.6294887-03:00",
+        "DataFim": "2025-06-16T22:53:51.6296237-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202401.CSV",
+        "Tamanho": 52876,
+        "Status": "CONCLUIDO",
+        "Hash": "c56761b5f8414b46d57c8eac445112d221f8cb729ce8bd9694793c74a8f4fa47",
+        "DataInicio": "2025-06-16T22:53:51.6808047-03:00",
+        "DataFim": "2025-06-16T22:53:51.6821147-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202402.CSV",
+        "Tamanho": 23844,
+        "Status": "CONCLUIDO",
+        "Hash": "38bef35a0323549dbd28c6347fe8a8d94630e4e7b5a1c7e6996bbb32e1d7d4d3",
+        "DataInicio": "2025-06-16T22:53:51.701919-03:00",
+        "DataFim": "2025-06-16T22:53:51.7022351-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202403.CSV",
+        "Tamanho": 76113,
+        "Status": "CONCLUIDO",
+        "Hash": "c7962a43f47a9eb05e435f91497a204ac1b8e9514161f9f89ad1e14a5ded5831",
+        "DataInicio": "2025-06-16T22:53:51.7395501-03:00",
+        "DataFim": "2025-06-16T22:53:51.7407189-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202404.CSV",
+        "Tamanho": 68137,
+        "Status": "CONCLUIDO",
+        "Hash": "f2100b4a6c7827a6994cdc16a2b44acda04786c2dc1cccf6e2122e463504b0e6",
+        "DataInicio": "2025-06-16T22:53:51.7644401-03:00",
+        "DataFim": "2025-06-16T22:53:51.7659092-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202405.CSV",
+        "Tamanho": 55620,
+        "Status": "CONCLUIDO",
+        "Hash": "611cdf97a7be0164591b55588f405ed45c0f7183eec3e28b7c445a7fa2e829e0",
+        "DataInicio": "2025-06-16T22:53:51.7902811-03:00",
+        "DataFim": "2025-06-16T22:53:51.7914801-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202401.CSV",
+        "Tamanho": 81724,
+        "Status": "CONCLUIDO",
+        "Hash": "f73ae7dd0f8d3f89026fb462fca3eed8e95581921c69d952951ae89a7613ee45",
+        "DataInicio": "2025-06-16T22:53:51.8256676-03:00",
+        "DataFim": "2025-06-16T22:53:51.8288312-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202402.CSV",
+        "Tamanho": 19991,
+        "Status": "CONCLUIDO",
+        "Hash": "a919f82a200c6e04a740987493cf30714817b6b9338f224fcc2c700d89ba3a76",
+        "DataInicio": "2025-06-16T22:53:51.854832-03:00",
+        "DataFim": "2025-06-16T22:53:51.8549881-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202403.CSV",
+        "Tamanho": 69340,
+        "Status": "CONCLUIDO",
+        "Hash": "d858efb0eab6da1d822e3e759c4d8a3d299297fbca8a4cbc75bc24fe08ea1156",
+        "DataInicio": "2025-06-16T22:53:51.8970035-03:00",
+        "DataFim": "2025-06-16T22:53:51.8986841-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202404.CSV",
+        "Tamanho": 50468,
+        "Status": "CONCLUIDO",
+        "Hash": "433ed755d5c6aaf411ee937c0a5a8a772e3f665be1540f4681f62dbc6aa33400",
+        "DataInicio": "2025-06-16T22:53:51.9206052-03:00",
+        "DataFim": "2025-06-16T22:53:51.9212104-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202401.CSV",
+        "Tamanho": 15208,
+        "Status": "CONCLUIDO",
+        "Hash": "0d2681e5e9709077883990fe2cea5db3131997ff9b7fb3e3ddeba82f7d2538b3",
+        "DataInicio": "2025-06-16T22:53:51.9509143-03:00",
+        "DataFim": "2025-06-16T22:53:51.9510577-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202402.CSV",
+        "Tamanho": 46846,
+        "Status": "CONCLUIDO",
+        "Hash": "736c7ee525cb3b34274ff0b7ba4cc3286d51135c6c70e53fa25af74ce9389d63",
+        "DataInicio": "2025-06-16T22:53:51.9806384-03:00",
+        "DataFim": "2025-06-16T22:53:51.9809496-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202403.CSV",
+        "Tamanho": 11894,
+        "Status": "CONCLUIDO",
+        "Hash": "b9a66a5ccc42172ea21c7d9f8051344c07978930e6c3076a61c5b3c5116d7a26",
+        "DataInicio": "2025-06-16T22:53:53.1382368-03:00",
+        "DataFim": "2025-06-16T22:53:53.1384264-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202405.CSV",
+        "Tamanho": 50284,
+        "Status": "CONCLUIDO",
+        "Hash": "99a102fae0f56f23bf513b6c438ff3b538686416f836b86e5595874f41e871a3",
+        "DataInicio": "2025-06-16T22:53:53.1780795-03:00",
+        "DataFim": "2025-06-16T22:53:53.1785887-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202403.CSV",
+        "Tamanho": 37037,
+        "Status": "CONCLUIDO",
+        "Hash": "8c843cdb645855fce5fa58e5e3e2d56b621a9fa55f7959d7250474f704c93849",
+        "DataInicio": "2025-06-16T22:53:53.2014829-03:00",
+        "DataFim": "2025-06-16T22:53:53.20174-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202404.CSV",
+        "Tamanho": 62327,
+        "Status": "CONCLUIDO",
+        "Hash": "7da79cab9632344b335a14ed2494b4f49ff90e110b5b7b6e8a3a954103f07536",
+        "DataInicio": "2025-06-16T22:53:53.2328186-03:00",
+        "DataFim": "2025-06-16T22:53:53.2338697-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202405.CSV",
+        "Tamanho": 23205,
+        "Status": "CONCLUIDO",
+        "Hash": "731522415a24d3244ad5c5dfbb0b4b9b09b1e67710bd0e859b231b33bdc9aca7",
+        "DataInicio": "2025-06-16T22:53:53.255452-03:00",
+        "DataFim": "2025-06-16T22:53:53.2556363-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_PART_202401.CSV",
+        "Tamanho": 91612,
+        "Status": "CONCLUIDO",
+        "Hash": "445e8b6f61e969c3ae367e77e75eef2903021f5dece8a4ffce34f27e52a7d354",
+        "DataInicio": "2025-06-16T22:53:53.2858434-03:00",
+        "DataFim": "2025-06-16T22:53:53.2868076-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_PART_202403.CSV",
+        "Tamanho": 30138,
+        "Status": "CONCLUIDO",
+        "Hash": "0daebd7c7cbfaba9808109ffba64a32fefe7bc821a3d291e6951d73fecc44ce1",
+        "DataInicio": "2025-06-16T22:53:53.3093725-03:00",
+        "DataFim": "2025-06-16T22:53:53.3096168-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_BALG_202401.CSV",
+        "Tamanho": 29617,
+        "Status": "CONCLUIDO",
+        "Hash": "3566a14db305ae103d0b7cc210a7b5afb280d5aa372d3b48c18e35ade5d4c1af",
+        "DataInicio": "2025-06-16T22:53:53.3451234-03:00",
+        "DataFim": "2025-06-16T22:53:53.3461869-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_BALG_202403.CSV",
+        "Tamanho": 58101,
+        "Status": "CONCLUIDO",
+        "Hash": "93d9af94516714f4fec7315f9ca36051106d88ceb7058cfa633c48a0efd45811",
+        "DataInicio": "2025-06-16T22:53:54.2771347-03:00",
+        "DataFim": "2025-06-16T22:53:54.2777605-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_BALG_202405.CSV",
+        "Tamanho": 37058,
+        "Status": "CONCLUIDO",
+        "Hash": "ba215f9b56cd1d5f214ce0c827fa8a2ea8cc6309a4c5a2eaadec608c78d73fdc",
+        "DataInicio": "2025-06-16T22:53:54.3215539-03:00",
+        "DataFim": "2025-06-16T22:53:54.3225591-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_PART_202401.CSV",
+        "Tamanho": 119339,
+        "Status": "CONCLUIDO",
+        "Hash": "61774a2f4c136eb00506efb0bb1707cb27cfb8e8bed18e4f461bf414a72e60e8",
+        "DataInicio": "2025-06-16T22:53:54.3535067-03:00",
+        "DataFim": "2025-06-16T22:53:54.3556832-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_PART_202402.CSV",
+        "Tamanho": 42113,
+        "Status": "CONCLUIDO",
+        "Hash": "c72398161ce68ec353459f4b823c4f073adb8ee162385f0a7c0af9cb1dff952c",
+        "DataInicio": "2025-06-16T22:53:54.3801445-03:00",
+        "DataFim": "2025-06-16T22:53:54.3804805-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_PART_202403.CSV",
+        "Tamanho": 30484,
+        "Status": "CONCLUIDO",
+        "Hash": "dc88f506a5955360777f078ca39268356f275280300206ac8badc451a2173c6f",
+        "DataInicio": "2025-06-16T22:53:54.4220506-03:00",
+        "DataFim": "2025-06-16T22:53:54.4225222-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "5005_PART_202404.CSV",
+        "Tamanho": 117532,
+        "Status": "CONCLUIDO",
+        "Hash": "c612014ac844334d7a72215af1f36f494106b37c8c460ca2b61eaa6789fe3387",
+        "DataInicio": "2025-06-16T22:53:54.4751106-03:00",
+        "DataFim": "2025-06-16T22:53:54.4767725-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 32,
+    "ArquivosProcessados": 32,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "85ef147f-bed5-4a7e-9e2f-479236ecbbed",
+    "UsuarioId": null,
+    "UsuarioNome": null,
+    "DataCriacao": "2025-06-16T22:54:44.1676644-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T22:54:44.167667-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_PART_202404.CSV",
+        "Tamanho": 49337,
+        "Status": "CONCLUIDO",
+        "Hash": "bf55e70c59494cadd4df8d05d50c2c46fc305b0621c73f9e261efe44259239a3",
+        "DataInicio": "2025-06-16T22:54:44.4233721-03:00",
+        "DataFim": "2025-06-16T22:54:44.4242229-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202401.CSV",
+        "Tamanho": 9294,
+        "Status": "CONCLUIDO",
+        "Hash": "e1c12fcd692f56bf9894c14f51002c28d35b89c57791d247e0d169930f20b0a7",
+        "DataInicio": "2025-06-16T22:54:44.512716-03:00",
+        "DataFim": "2025-06-16T22:54:44.5130322-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202402.CSV",
+        "Tamanho": 16622,
+        "Status": "CONCLUIDO",
+        "Hash": "1d14091930cd5e313f30b2a098a449f99a7d6b8081816318c4c10e072a107411",
+        "DataInicio": "2025-06-16T22:54:44.6126069-03:00",
+        "DataFim": "2025-06-16T22:54:44.6128261-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202401.CSV",
+        "Tamanho": 52876,
+        "Status": "CONCLUIDO",
+        "Hash": "c56761b5f8414b46d57c8eac445112d221f8cb729ce8bd9694793c74a8f4fa47",
+        "DataInicio": "2025-06-16T22:54:44.6461463-03:00",
+        "DataFim": "2025-06-16T22:54:44.6470643-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202402.CSV",
+        "Tamanho": 23844,
+        "Status": "CONCLUIDO",
+        "Hash": "38bef35a0323549dbd28c6347fe8a8d94630e4e7b5a1c7e6996bbb32e1d7d4d3",
+        "DataInicio": "2025-06-16T22:54:44.7292016-03:00",
+        "DataFim": "2025-06-16T22:54:44.7295565-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202403.CSV",
+        "Tamanho": 76113,
+        "Status": "CONCLUIDO",
+        "Hash": "c7962a43f47a9eb05e435f91497a204ac1b8e9514161f9f89ad1e14a5ded5831",
+        "DataInicio": "2025-06-16T22:54:44.7923861-03:00",
+        "DataFim": "2025-06-16T22:54:44.7936963-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 6,
+    "ArquivosProcessados": 6,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "a951ceb4-a7b8-4dc6-b235-9b4111a765ac",
+    "UsuarioId": "1",
+    "UsuarioNome": "Usu\u00E1rio Teste",
+    "DataCriacao": "2025-06-16T23:04:58.6039307-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T23:04:58.6042809-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_BALG_202404.CSV",
+        "Tamanho": 20595,
+        "Status": "CONCLUIDO",
+        "Hash": "6562f3f2b6f15b7e33bd6196463b487c6683f5c8785a1c9dd733f547eeba26aa",
+        "DataInicio": "2025-06-16T23:05:01.0057783-03:00",
+        "DataFim": "2025-06-16T23:05:01.0140841-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_BALG_202405.CSV",
+        "Tamanho": 105836,
+        "Status": "CONCLUIDO",
+        "Hash": "4fc094a5f9dcc2e684a059c29fd3c94382a216d00e2e5635c25137f83928a8b3",
+        "DataInicio": "2025-06-16T23:05:01.3728812-03:00",
+        "DataFim": "2025-06-16T23:05:01.3756764-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202401.CSV",
+        "Tamanho": 53834,
+        "Status": "CONCLUIDO",
+        "Hash": "91d28ba99dbaaf85ef8dec3bc3e426f1ce388448607024cf451f926ad8edeebc",
+        "DataInicio": "2025-06-16T23:05:01.4286004-03:00",
+        "DataFim": "2025-06-16T23:05:01.4293237-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202404.CSV",
+        "Tamanho": 49337,
+        "Status": "CONCLUIDO",
+        "Hash": "bf55e70c59494cadd4df8d05d50c2c46fc305b0621c73f9e261efe44259239a3",
+        "DataInicio": "2025-06-16T23:05:01.4643124-03:00",
+        "DataFim": "2025-06-16T23:05:01.464997-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202401.CSV",
+        "Tamanho": 9294,
+        "Status": "CONCLUIDO",
+        "Hash": "e1c12fcd692f56bf9894c14f51002c28d35b89c57791d247e0d169930f20b0a7",
+        "DataInicio": "2025-06-16T23:05:01.5453991-03:00",
+        "DataFim": "2025-06-16T23:05:01.5456635-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202402.CSV",
+        "Tamanho": 16622,
+        "Status": "CONCLUIDO",
+        "Hash": "1d14091930cd5e313f30b2a098a449f99a7d6b8081816318c4c10e072a107411",
+        "DataInicio": "2025-06-16T23:05:01.6018681-03:00",
+        "DataFim": "2025-06-16T23:05:01.6021714-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 6,
+    "ArquivosProcessados": 6,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "94190658-be75-4bfe-be1b-1ae9ba16315b",
+    "UsuarioId": "1",
+    "UsuarioNome": "Usu\u00E1rio Teste",
+    "DataCriacao": "2025-06-16T23:05:54.329263-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T23:05:54.3292662-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "2002_PART_202401.CSV",
+        "Tamanho": 52876,
+        "Status": "CONCLUIDO",
+        "Hash": "c56761b5f8414b46d57c8eac445112d221f8cb729ce8bd9694793c74a8f4fa47",
+        "DataInicio": "2025-06-16T23:05:59.6937674-03:00",
+        "DataFim": "2025-06-16T23:05:59.6993677-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202402.CSV",
+        "Tamanho": 23844,
+        "Status": "CONCLUIDO",
+        "Hash": "38bef35a0323549dbd28c6347fe8a8d94630e4e7b5a1c7e6996bbb32e1d7d4d3",
+        "DataInicio": "2025-06-16T23:06:06.2078099-03:00",
+        "DataFim": "2025-06-16T23:06:06.2099568-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202403.CSV",
+        "Tamanho": 76113,
+        "Status": "CONCLUIDO",
+        "Hash": "c7962a43f47a9eb05e435f91497a204ac1b8e9514161f9f89ad1e14a5ded5831",
+        "DataInicio": "2025-06-16T23:06:09.1910204-03:00",
+        "DataFim": "2025-06-16T23:06:09.1928271-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202404.CSV",
+        "Tamanho": 68137,
+        "Status": "CONCLUIDO",
+        "Hash": "f2100b4a6c7827a6994cdc16a2b44acda04786c2dc1cccf6e2122e463504b0e6",
+        "DataInicio": "2025-06-16T23:06:09.2367798-03:00",
+        "DataFim": "2025-06-16T23:06:09.2386046-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_PART_202405.CSV",
+        "Tamanho": 55620,
+        "Status": "CONCLUIDO",
+        "Hash": "611cdf97a7be0164591b55588f405ed45c0f7183eec3e28b7c445a7fa2e829e0",
+        "DataInicio": "2025-06-16T23:06:09.2831874-03:00",
+        "DataFim": "2025-06-16T23:06:09.2841387-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202401.CSV",
+        "Tamanho": 81724,
+        "Status": "CONCLUIDO",
+        "Hash": "f73ae7dd0f8d3f89026fb462fca3eed8e95581921c69d952951ae89a7613ee45",
+        "DataInicio": "2025-06-16T23:06:09.3567983-03:00",
+        "DataFim": "2025-06-16T23:06:09.3583911-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 6,
+    "ArquivosProcessados": 6,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "50e65916-cd42-4951-9887-f591256d91c4",
+    "UsuarioId": "1",
+    "UsuarioNome": "Usu\u00E1rio Teste",
+    "DataCriacao": "2025-06-16T23:10:08.0660869-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T23:10:08.0664558-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_PART_202401.CSV",
+        "Tamanho": 53834,
+        "Status": "CONCLUIDO",
+        "Hash": "91d28ba99dbaaf85ef8dec3bc3e426f1ce388448607024cf451f926ad8edeebc",
+        "DataInicio": "2025-06-16T23:10:08.3672747-03:00",
+        "DataFim": "2025-06-16T23:10:08.3726011-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 1,
+    "ArquivosProcessados": 1,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "86a65d3f-d06f-4f0d-a53f-54e049dc9083",
+    "UsuarioId": "1",
+    "UsuarioNome": "Usu\u00E1rio Teste",
+    "DataCriacao": "2025-06-16T23:10:17.6933077-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T23:10:17.6933109-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "3003_BALG_202403.CSV",
+        "Tamanho": 69340,
+        "Status": "CONCLUIDO",
+        "Hash": "d858efb0eab6da1d822e3e759c4d8a3d299297fbca8a4cbc75bc24fe08ea1156",
+        "DataInicio": "2025-06-16T23:10:17.7571282-03:00",
+        "DataFim": "2025-06-16T23:10:17.7592469-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202404.CSV",
+        "Tamanho": 50468,
+        "Status": "CONCLUIDO",
+        "Hash": "433ed755d5c6aaf411ee937c0a5a8a772e3f665be1540f4681f62dbc6aa33400",
+        "DataInicio": "2025-06-16T23:10:17.7997147-03:00",
+        "DataFim": "2025-06-16T23:10:17.8001029-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202401.CSV",
+        "Tamanho": 15208,
+        "Status": "CONCLUIDO",
+        "Hash": "0d2681e5e9709077883990fe2cea5db3131997ff9b7fb3e3ddeba82f7d2538b3",
+        "DataInicio": "2025-06-16T23:10:17.8258698-03:00",
+        "DataFim": "2025-06-16T23:10:17.826187-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202402.CSV",
+        "Tamanho": 46846,
+        "Status": "CONCLUIDO",
+        "Hash": "736c7ee525cb3b34274ff0b7ba4cc3286d51135c6c70e53fa25af74ce9389d63",
+        "DataInicio": "2025-06-16T23:10:17.8896778-03:00",
+        "DataFim": "2025-06-16T23:10:17.890591-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202403.CSV",
+        "Tamanho": 11894,
+        "Status": "CONCLUIDO",
+        "Hash": "b9a66a5ccc42172ea21c7d9f8051344c07978930e6c3076a61c5b3c5116d7a26",
+        "DataInicio": "2025-06-16T23:10:18.0345112-03:00",
+        "DataFim": "2025-06-16T23:10:18.0347954-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202405.CSV",
+        "Tamanho": 50284,
+        "Status": "CONCLUIDO",
+        "Hash": "99a102fae0f56f23bf513b6c438ff3b538686416f836b86e5595874f41e871a3",
+        "DataInicio": "2025-06-16T23:10:18.1339674-03:00",
+        "DataFim": "2025-06-16T23:10:18.134609-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202403.CSV",
+        "Tamanho": 37037,
+        "Status": "CONCLUIDO",
+        "Hash": "8c843cdb645855fce5fa58e5e3e2d56b621a9fa55f7959d7250474f704c93849",
+        "DataInicio": "2025-06-16T23:10:18.184186-03:00",
+        "DataFim": "2025-06-16T23:10:18.184908-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202404.CSV",
+        "Tamanho": 62327,
+        "Status": "CONCLUIDO",
+        "Hash": "7da79cab9632344b335a14ed2494b4f49ff90e110b5b7b6e8a3a954103f07536",
+        "DataInicio": "2025-06-16T23:10:18.3264327-03:00",
+        "DataFim": "2025-06-16T23:10:18.3985795-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202405.CSV",
+        "Tamanho": 23205,
+        "Status": "CONCLUIDO",
+        "Hash": "731522415a24d3244ad5c5dfbb0b4b9b09b1e67710bd0e859b231b33bdc9aca7",
+        "DataInicio": "2025-06-16T23:10:18.4889484-03:00",
+        "DataFim": "2025-06-16T23:10:18.4893504-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 9,
+    "ArquivosProcessados": 9,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "b105e341-511e-4054-9201-54ae5ebd42d4",
+    "UsuarioId": "1",
+    "UsuarioNome": "Usu\u00E1rio Teste",
+    "DataCriacao": "2025-06-16T23:10:30.6911891-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T23:10:30.6911921-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "2002_PART_202405.CSV",
+        "Tamanho": 55620,
+        "Status": "CONCLUIDO",
+        "Hash": "611cdf97a7be0164591b55588f405ed45c0f7183eec3e28b7c445a7fa2e829e0",
+        "DataInicio": "2025-06-16T23:10:30.7279572-03:00",
+        "DataFim": "2025-06-16T23:10:30.7286284-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202401.CSV",
+        "Tamanho": 81724,
+        "Status": "CONCLUIDO",
+        "Hash": "f73ae7dd0f8d3f89026fb462fca3eed8e95581921c69d952951ae89a7613ee45",
+        "DataInicio": "2025-06-16T23:10:30.782018-03:00",
+        "DataFim": "2025-06-16T23:10:30.7837091-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202402.CSV",
+        "Tamanho": 19991,
+        "Status": "CONCLUIDO",
+        "Hash": "a919f82a200c6e04a740987493cf30714817b6b9338f224fcc2c700d89ba3a76",
+        "DataInicio": "2025-06-16T23:10:30.8176225-03:00",
+        "DataFim": "2025-06-16T23:10:30.8179387-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202403.CSV",
+        "Tamanho": 69340,
+        "Status": "CONCLUIDO",
+        "Hash": "d858efb0eab6da1d822e3e759c4d8a3d299297fbca8a4cbc75bc24fe08ea1156",
+        "DataInicio": "2025-06-16T23:10:30.868184-03:00",
+        "DataFim": "2025-06-16T23:10:30.8695992-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_BALG_202404.CSV",
+        "Tamanho": 50468,
+        "Status": "CONCLUIDO",
+        "Hash": "433ed755d5c6aaf411ee937c0a5a8a772e3f665be1540f4681f62dbc6aa33400",
+        "DataInicio": "2025-06-16T23:10:30.9120705-03:00",
+        "DataFim": "2025-06-16T23:10:30.9127926-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202401.CSV",
+        "Tamanho": 15208,
+        "Status": "CONCLUIDO",
+        "Hash": "0d2681e5e9709077883990fe2cea5db3131997ff9b7fb3e3ddeba82f7d2538b3",
+        "DataInicio": "2025-06-16T23:10:30.9442735-03:00",
+        "DataFim": "2025-06-16T23:10:30.9445394-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202402.CSV",
+        "Tamanho": 46846,
+        "Status": "CONCLUIDO",
+        "Hash": "736c7ee525cb3b34274ff0b7ba4cc3286d51135c6c70e53fa25af74ce9389d63",
+        "DataInicio": "2025-06-16T23:10:30.9891331-03:00",
+        "DataFim": "2025-06-16T23:10:30.989739-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202403.CSV",
+        "Tamanho": 11894,
+        "Status": "CONCLUIDO",
+        "Hash": "b9a66a5ccc42172ea21c7d9f8051344c07978930e6c3076a61c5b3c5116d7a26",
+        "DataInicio": "2025-06-16T23:10:31.022767-03:00",
+        "DataFim": "2025-06-16T23:10:31.0229668-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "3003_PART_202405.CSV",
+        "Tamanho": 50284,
+        "Status": "CONCLUIDO",
+        "Hash": "99a102fae0f56f23bf513b6c438ff3b538686416f836b86e5595874f41e871a3",
+        "DataInicio": "2025-06-16T23:10:31.0762615-03:00",
+        "DataFim": "2025-06-16T23:10:31.0769671-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "4004_BALG_202403.CSV",
+        "Tamanho": 37037,
+        "Status": "CONCLUIDO",
+        "Hash": "8c843cdb645855fce5fa58e5e3e2d56b621a9fa55f7959d7250474f704c93849",
+        "DataInicio": "2025-06-16T23:10:31.1119856-03:00",
+        "DataFim": "2025-06-16T23:10:31.1125133-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 10,
+    "ArquivosProcessados": 10,
+    "ArquivosComErro": 0
+  },
+  {
+    "Id": "859376f2-b28a-429a-a2b3-2a531374111d",
+    "UsuarioId": "1",
+    "UsuarioNome": "Usu\u00E1rio Teste",
+    "DataCriacao": "2025-06-16T23:14:52.6893181-03:00",
+    "Status": "PROCESSANDO",
+    "DataInicio": "2025-06-16T23:14:52.6896547-03:00",
+    "DataFim": null,
+    "Arquivos": [
+      {
+        "NomeArquivo": "1001_PART_202401.CSV",
+        "Tamanho": 53834,
+        "Status": "CONCLUIDO",
+        "Hash": "91d28ba99dbaaf85ef8dec3bc3e426f1ce388448607024cf451f926ad8edeebc",
+        "DataInicio": "2025-06-16T23:14:52.9860223-03:00",
+        "DataFim": "2025-06-16T23:14:52.9913495-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "1001_PART_202404.CSV",
+        "Tamanho": 49337,
+        "Status": "CONCLUIDO",
+        "Hash": "bf55e70c59494cadd4df8d05d50c2c46fc305b0621c73f9e261efe44259239a3",
+        "DataInicio": "2025-06-16T23:14:53.0306261-03:00",
+        "DataFim": "2025-06-16T23:14:53.0313736-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202401.CSV",
+        "Tamanho": 9294,
+        "Status": "CONCLUIDO",
+        "Hash": "e1c12fcd692f56bf9894c14f51002c28d35b89c57791d247e0d169930f20b0a7",
+        "DataInicio": "2025-06-16T23:14:53.0742259-03:00",
+        "DataFim": "2025-06-16T23:14:53.0745871-03:00",
+        "MensagemErro": null
+      },
+      {
+        "NomeArquivo": "2002_BALG_202402.CSV",
+        "Tamanho": 16622,
+        "Status": "CONCLUIDO",
+        "Hash": "1d14091930cd5e313f30b2a098a449f99a7d6b8081816318c4c10e072a107411",
+        "DataInicio": "2025-06-16T23:14:53.1515545-03:00",
+        "DataFim": "2025-06-16T23:14:53.1518619-03:00",
+        "MensagemErro": null
+      }
+    ],
+    "MensagemErro": null,
+    "TotalArquivos": 4,
+    "ArquivosProcessados": 4,
+    "ArquivosComErro": 0
+  }
+]

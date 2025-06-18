@@ -1,190 +1,160 @@
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
+using System.Threading.Tasks;
 using BalgImport.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BalgImport.Services
 {
     public interface IUploadService
     {
-        Task<Guid> IniciarNovoBatch();
-        Task<StatusUpload> ProcessarUpload(IFormFile arquivo, Guid batchId);
-        Task<UploadBatch?> ObterStatusBatch(Guid batchId);
-        Task<List<UploadBatch>> ObterTodosBatches();
-        Task<bool> RetomarUpload(string nomeArquivo, Guid batchId);
-        Task<bool> CancelarUpload(string nomeArquivo, Guid batchId);
+        Task<UploadBatch> IniciarNovoBatch(string usuarioId, string usuarioNome);
+        Task<UploadStatus> ProcessarUpload(IFormFile file, Guid batchId);
+        Task<UploadBatch> ObterStatusBatch(Guid batchId);
+        Task<IEnumerable<UploadBatch>> ObterTodosBatches();
+        Task RetomarUpload(Guid batchId);
+        Task CancelarUpload(Guid batchId);
     }
 
     public class UploadService : IUploadService
     {
-        private static readonly ConcurrentDictionary<Guid, UploadBatch> _batches = new();
-        private static readonly ConcurrentDictionary<string, StatusUpload> _uploads = new();
         private readonly ILogger<UploadService> _logger;
-        private readonly string _uploadPath;
-        private static readonly SemaphoreSlim _fileLock = new SemaphoreSlim(1, 1);
+        private readonly IStorageService _storageService;
+        private readonly List<UploadBatch> _batches = new List<UploadBatch>();
+        private readonly IHubContext<Hubs.UploadHub> _hubContext;
 
-        public UploadService(ILogger<UploadService> logger, IConfiguration configuration)
+        public UploadService(ILogger<UploadService> logger, IStorageService storageService, IHubContext<Hubs.UploadHub> hubContext)
         {
             _logger = logger;
-            _uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
-            Directory.CreateDirectory(_uploadPath);
+            _storageService = storageService;
+            _hubContext = hubContext;
         }
 
-        public Task<Guid> IniciarNovoBatch()
+        private async Task NotifyStatusChange(UploadBatch batch)
         {
-            var batch = new UploadBatch();
-            _batches.TryAdd(batch.Id, batch);
-            return Task.FromResult(batch.Id);
+            await _hubContext.Clients.All.SendAsync("statusChanged", new
+            {
+                batchId = batch.Id,
+                status = batch.Status,
+                arquivosProcessados = batch.ArquivosProcessados,
+                arquivosComErro = batch.ArquivosComErro,
+                totalArquivos = batch.TotalArquivos,
+                arquivos = batch.Arquivos.Select(a => new
+                {
+                    nomeArquivo = a.NomeArquivo,
+                    status = a.Status,
+                    mensagemErro = a.MensagemErro
+                }).ToList()
+            });
         }
 
-        public async Task<StatusUpload> ProcessarUpload(IFormFile arquivo, Guid batchId)
+        public async Task<UploadBatch> IniciarNovoBatch(string usuarioId, string usuarioNome)
         {
-            if (!_batches.TryGetValue(batchId, out var batch))
-                throw new ArgumentException("Batch não encontrado");
-
-            var fileName = Path.GetFileName(arquivo.FileName);
-            var filePath = Path.Combine(_uploadPath, fileName);
-
-            // Copia o conteúdo do arquivo para memória enquanto o stream ainda está disponível
-            byte[] fileBytes;
-            using (var ms = new MemoryStream())
+            var batch = new UploadBatch
             {
-                await arquivo.CopyToAsync(ms);
-                fileBytes = ms.ToArray();
-            }
-            
-            var upload = new StatusUpload
-            {
-                NomeArquivo = fileName,
-                Status = "PENDENTE",
-                BatchId = batchId,
-                CaminhoArquivo = filePath,
-                TamanhoArquivo = arquivo.Length,
+                UsuarioId = usuarioId,
+                UsuarioNome = usuarioNome,
+                Status = "PROCESSANDO",
                 DataInicio = DateTime.Now
             };
 
-            _uploads.TryAdd(fileName, upload);
-            batch.Arquivos.Add(upload);
-            batch.TotalArquivos++;
+            await _storageService.SaveBatch(batch);
+            _batches.Add(batch);
+            await NotifyStatusChange(batch);
+            return batch;
+        }
 
-            // Inicia o processamento assíncrono
-            _ = Task.Run(async () =>
+        public async Task<UploadStatus> ProcessarUpload(IFormFile file, Guid batchId)
+        {
+            var batch = _batches.FirstOrDefault(b => b.Id == batchId);
+            if (batch == null)
+                throw new Exception("Batch não encontrado");
+
+            var uploadStatus = new UploadStatus
             {
-                try
-                {
-                    upload.Status = "UPLOADING";
+                NomeArquivo = file.FileName,
+                Tamanho = file.Length,
+                Status = "PROCESSANDO",
+                DataInicio = DateTime.Now
+            };
 
-                    // Salva o arquivo usando o semáforo
-                    await _fileLock.WaitAsync();
-                    try
-                    {
-                        await File.WriteAllBytesAsync(filePath, fileBytes);
-                    }
-                    finally
-                    {
-                        _fileLock.Release();
-                    }
+            batch.Arquivos.Add(uploadStatus);
+            batch.Status = "PROCESSANDO";
+            await NotifyStatusChange(batch);
 
-                    upload.Status = "PROCESSANDO";
-                    
-                    // Simula processamento
-                    await Task.Delay(1000);
-                    
-                    // Calcula o hash do arquivo
-                    upload.HashArquivo = await CalcularHashArquivo(filePath);
-                    
-                    upload.Status = "CONCLUIDO";
-                    upload.DataFim = DateTime.Now;
-                    
-                    batch.ArquivosProcessados++;
-                    if (batch.ArquivosProcessados + batch.ArquivosComErro == batch.TotalArquivos)
-                    {
-                        batch.Status = "FINALIZADO";
-                        batch.DataFinalizacao = DateTime.Now;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, $"Erro ao processar arquivo {fileName}");
-                    upload.Status = "ERRO";
-                    upload.Mensagem = $"Erro ao processar arquivo: {ex.Message}\n\nDetalhes técnicos:\n{ex}";
-                    upload.DataFim = DateTime.Now;
-                    batch.ArquivosComErro++;
-
-                    // Limpa o arquivo em caso de erro
-                    try
-                    {
-                        await _fileLock.WaitAsync();
-                        try
-                        {
-                            if (File.Exists(filePath))
-                            {
-                                File.Delete(filePath);
-                            }
-                        }
-                        finally
-                        {
-                            _fileLock.Release();
-                        }
-                    }
-                    catch (Exception deleteEx)
-                    {
-                        _logger.LogError(deleteEx, $"Erro ao deletar arquivo {fileName} após falha no processamento");
-                    }
-                }
-            });
-
-            return upload;
-        }
-
-        public Task<UploadBatch?> ObterStatusBatch(Guid batchId)
-        {
-            return Task.FromResult(_batches.TryGetValue(batchId, out var batch) ? batch : null);
-        }
-
-        public Task<List<UploadBatch>> ObterTodosBatches()
-        {
-            return Task.FromResult(_batches.Values.OrderByDescending(x => x.DataCriacao).ToList());
-        }
-
-        public Task<bool> RetomarUpload(string nomeArquivo, Guid batchId)
-        {
-            if (!_uploads.TryGetValue(nomeArquivo, out var upload) || upload.BatchId != batchId)
-                return Task.FromResult(false);
-
-            upload.Status = "PENDENTE";
-            upload.Tentativas++;
-            upload.DataInicio = DateTime.Now;
-            upload.DataFim = null;
-
-            return Task.FromResult(true);
-        }
-
-        public Task<bool> CancelarUpload(string nomeArquivo, Guid batchId)
-        {
-            if (!_uploads.TryGetValue(nomeArquivo, out var upload) || upload.BatchId != batchId)
-                return Task.FromResult(false);
-
-            upload.Status = "CANCELADO";
-            upload.DataFim = DateTime.Now;
-            return Task.FromResult(true);
-        }
-
-        private async Task<string> CalcularHashArquivo(string filePath)
-        {
-            await _fileLock.WaitAsync();
             try
             {
-                using var md5 = MD5.Create();
-                using var stream = File.OpenRead(filePath);
-                var hash = await md5.ComputeHashAsync(stream);
-                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                // Processa o arquivo
+                using var stream = file.OpenReadStream();
+                using var sha256 = SHA256.Create();
+                uploadStatus.Hash = BitConverter.ToString(sha256.ComputeHash(stream)).Replace("-", "").ToLower();
+                uploadStatus.Status = "CONCLUIDO";
+                uploadStatus.DataFim = DateTime.Now;
             }
-            finally
+            catch (Exception ex)
             {
-                _fileLock.Release();
+                _logger.LogError(ex, "Erro ao processar arquivo {FileName}", file.FileName);
+                uploadStatus.Status = "ERRO";
+                uploadStatus.MensagemErro = ex.Message;
+                uploadStatus.DataFim = DateTime.Now;
+            }
+
+            await _storageService.SaveBatch(batch);
+            await NotifyStatusChange(batch);
+            return uploadStatus;
+        }
+
+        public async Task<UploadBatch> ObterStatusBatch(Guid batchId)
+        {
+            var batch = _batches.FirstOrDefault(b => b.Id == batchId);
+            if (batch == null)
+            {
+                throw new Exception($"Lote {batchId} não encontrado");
+            }
+            return batch;
+        }
+
+        public async Task<IEnumerable<UploadBatch>> ObterTodosBatches()
+        {
+            return _batches.ToList();
+        }
+
+        public async Task RetomarUpload(Guid batchId)
+        {
+            var batch = _batches.FirstOrDefault(b => b.Id == batchId);
+            if (batch != null)
+            {
+                foreach (var arquivo in batch.Arquivos.Where(a => a.Status == "ERRO"))
+                {
+                    arquivo.Status = "PENDENTE";
+                    arquivo.MensagemErro = null;
+                    arquivo.DataInicio = DateTime.Now;
+                    arquivo.DataFim = null;
+                }
+                batch.Status = "PROCESSANDO";
+                await _storageService.SaveBatch(batch);
+                await NotifyStatusChange(batch);
+            }
+        }
+
+        public async Task CancelarUpload(Guid batchId)
+        {
+            var batch = _batches.FirstOrDefault(b => b.Id == batchId);
+            if (batch != null)
+            {
+                foreach (var arquivo in batch.Arquivos.Where(a => a.Status == "PENDENTE"))
+                {
+                    arquivo.Status = "CANCELADO";
+                    arquivo.DataFim = DateTime.Now;
+                }
+                batch.Status = "CANCELADO";
+                await _storageService.SaveBatch(batch);
+                await NotifyStatusChange(batch);
             }
         }
     }

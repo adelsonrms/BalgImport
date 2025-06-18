@@ -1,0 +1,91 @@
+@{
+    ViewData["Title"] = "Importação de Arquivos";
+}
+
+<div class="container mt-4">
+    <h2>Importação de Arquivos BALG</h2>
+    
+    <div class="card mt-4">
+        <div class="card-body">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="arquivos" class="form-label">Selecione os arquivos CSV</label>
+                    <input type="file" class="form-control" id="arquivos" name="arquivos" multiple accept=".csv" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="btnUpload">Enviar Arquivos</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            Status da Importação
+        </div>
+        <div class="card-body">
+            <div id="statusContainer">
+                <!-- Os status serão inseridos aqui via JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        // Configuração do SignalR
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/importacaoHub")
+            .withAutomaticReconnect()
+            .build();
+
+        // Iniciar conexão
+        connection.start().catch(err => console.error(err));
+
+        // Receber notificações
+        connection.on("ReceberStatusImportacao", (data) => {
+            const statusHtml = `
+                <div class="alert alert-${data.status === 'ERRO' ? 'danger' : 'info'} mb-2">
+                    <strong>${data.nomeArquivo}</strong><br>
+                    ${data.mensagem}<br>
+                    <small>${new Date(data.dataHora).toLocaleString()}</small>
+                </div>
+            `;
+            document.getElementById('statusContainer').insertAdjacentHTML('afterbegin', statusHtml);
+        });
+
+        // Manipular envio do formulário
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btnUpload = document.getElementById('btnUpload');
+            btnUpload.disabled = true;
+            btnUpload.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...';
+
+            const formData = new FormData();
+            const arquivos = document.getElementById('arquivos').files;
+            
+            for (let i = 0; i < arquivos.length; i++) {
+                formData.append('arquivos', arquivos[i]);
+            }
+
+            try {
+                const response = await fetch('/api/ImportacaoApi/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar arquivos');
+                }
+
+                const result = await response.json();
+                alert(result.mensagem);
+            } catch (error) {
+                alert('Erro: ' + error.message);
+            } finally {
+                btnUpload.disabled = false;
+                btnUpload.innerHTML = 'Enviar Arquivos';
+            }
+        });
+    </script>
+} 

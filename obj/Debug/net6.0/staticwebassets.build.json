@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vBnJAe0afk7OF550du4d/Dmvm7SyyyjMcfe4a4aO348=",
+  "Hash": "RbIiaeTJxQ/OP0ErDrbGIpvW1AMGbu72Hs68hH9dW90=",
   "Source": "BalgImport",
   "BasePath": "_content/BalgImport",
   "Mode": "Default",
@@ -101,12 +101,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\site.js",
+      "Identity": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\DevonnoUploader.js",
       "SourceId": "BalgImport",
       "SourceType": "Discovered",
       "ContentRoot": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\",
       "BasePath": "_content/BalgImport",
-      "RelativePath": "js/site#[.{fingerprint}]?.js",
+      "RelativePath": "js/DevonnoUploader#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -115,11 +115,32 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "enph21dluq",
-      "Integrity": "GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek=",
+      "Fingerprint": "n0v2s02nsd",
+      "Integrity": "eXpKfmqcSNDo/U/gnAMC/wLymSH2F2NuTdbGjRf2ifo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\site.js"
+      "OriginalItemSpec": "wwwroot\\js\\DevonnoUploader.js"
+    },
+    {
+      "Identity": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\testData.js",
+      "SourceId": "BalgImport",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\",
+      "BasePath": "_content/BalgImport",
+      "RelativePath": "js/testData#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0rt59laune",
+      "Integrity": "JJ00Kdue+X6pTttn7QN5w6b+qvG3VKHtzyKljCmR2NE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\testData.js"
     },
     {
       "Identity": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
@@ -1317,6 +1338,111 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\testData.html",
+      "SourceId": "BalgImport",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\",
+      "BasePath": "_content/BalgImport",
+      "RelativePath": "testData#[.{fingerprint}]?.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "g7m9tz2xuk",
+      "Integrity": "VB5rdQ1BTsWeNvtcxR3hE9O3IrwSuWTZBEmqtIGxfOc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\testData.html"
+    },
+    {
+      "Identity": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1001_PART_202401.CSV",
+      "SourceId": "BalgImport",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\",
+      "BasePath": "_content/BalgImport",
+      "RelativePath": "uploads/1001_PART_202401#[.{fingerprint}]?.CSV",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "zvf0pl3awu",
+      "Integrity": "kdKLqZ26r4Xvjew7w+Qm8c44hEhgcCTPRR+Satjt7rw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\1001_PART_202401.CSV"
+    },
+    {
+      "Identity": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1001_PART_202404.CSV",
+      "SourceId": "BalgImport",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\",
+      "BasePath": "_content/BalgImport",
+      "RelativePath": "uploads/1001_PART_202404#[.{fingerprint}]?.CSV",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5jtbshohyo",
+      "Integrity": "v1XnDFlJTK3U340F1QwsRvwwWwYhxz+eJh7+RCWSOaM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\1001_PART_202404.CSV"
+    },
+    {
+      "Identity": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\2002_BALG_202402.CSV",
+      "SourceId": "BalgImport",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\",
+      "BasePath": "_content/BalgImport",
+      "RelativePath": "uploads/2002_BALG_202402#[.{fingerprint}]?.CSV",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "h3ej6s1mfk",
+      "Integrity": "HRQJGTDNXjE/MLKgmKRJ+Zp9a4CBgWMYxMEOByoQdBE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\2002_BALG_202402.CSV"
+    },
+    {
+      "Identity": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\2002_PART_202401.CSV",
+      "SourceId": "BalgImport",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\",
+      "BasePath": "_content/BalgImport",
+      "RelativePath": "uploads/2002_PART_202401#[.{fingerprint}]?.CSV",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "rc7keash3d",
+      "Integrity": "xWdhtfhBS0bVfI6sRFES0iH4y3Kc6L2WlHk8dKj0+kc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\2002_PART_202401.CSV"
     }
   ],
   "Endpoints": [
@@ -1343,7 +1469,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Jun 2025 01:22:10 GMT"
+          "Value": "Tue, 17 Jun 2025 23:15:38 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1388,7 +1514,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Jun 2025 01:22:10 GMT"
+          "Value": "Tue, 17 Jun 2025 23:15:38 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1433,7 +1559,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Jun 2025 01:22:10 GMT"
+          "Value": "Tue, 17 Jun 2025 23:15:38 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1470,7 +1596,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Jun 2025 01:22:10 GMT"
+          "Value": "Tue, 17 Jun 2025 23:15:38 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1649,8 +1775,8 @@
       ]
     },
     {
-      "Route": "js/site.enph21dluq.js",
-      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\site.js",
+      "Route": "js/DevonnoUploader.js",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\DevonnoUploader.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1659,7 +1785,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "12093"
+          "Value": "23821"
         },
         {
           "Name": "Content-Type",
@@ -1667,56 +1793,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek=\""
+          "Value": "\"eXpKfmqcSNDo/U/gnAMC/wLymSH2F2NuTdbGjRf2ifo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 16 Jun 2025 22:27:52 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "enph21dluq"
-        },
-        {
-          "Name": "label",
-          "Value": "js/site.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek="
-        }
-      ]
-    },
-    {
-      "Route": "js/site.js",
-      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\site.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "12093"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 16 Jun 2025 22:27:52 GMT"
+          "Value": "Wed, 18 Jun 2025 02:01:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1726,7 +1807,134 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-GpIv9qj0LikfNSvfRuxS/HlwYfsB3fdr8l28XxJRAek="
+          "Value": "sha256-eXpKfmqcSNDo/U/gnAMC/wLymSH2F2NuTdbGjRf2ifo="
+        }
+      ]
+    },
+    {
+      "Route": "js/DevonnoUploader.n0v2s02nsd.js",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\DevonnoUploader.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23821"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"eXpKfmqcSNDo/U/gnAMC/wLymSH2F2NuTdbGjRf2ifo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Jun 2025 02:01:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n0v2s02nsd"
+        },
+        {
+          "Name": "label",
+          "Value": "js/DevonnoUploader.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-eXpKfmqcSNDo/U/gnAMC/wLymSH2F2NuTdbGjRf2ifo="
+        }
+      ]
+    },
+    {
+      "Route": "js/testData.0rt59laune.js",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\testData.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1578"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JJ00Kdue+X6pTttn7QN5w6b+qvG3VKHtzyKljCmR2NE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Jun 2025 00:23:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0rt59laune"
+        },
+        {
+          "Name": "label",
+          "Value": "js/testData.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JJ00Kdue+X6pTttn7QN5w6b+qvG3VKHtzyKljCmR2NE="
+        }
+      ]
+    },
+    {
+      "Route": "js/testData.js",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\testData.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1578"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JJ00Kdue+X6pTttn7QN5w6b+qvG3VKHtzyKljCmR2NE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Jun 2025 00:23:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JJ00Kdue+X6pTttn7QN5w6b+qvG3VKHtzyKljCmR2NE="
         }
       ]
     },
@@ -6401,6 +6609,416 @@
         {
           "Name": "integrity",
           "Value": "sha256-aBc/n/nO9esvq0e80G57lEYLonvE5dKKUgoozaiVfLM="
+        }
+      ]
+    },
+    {
+      "Route": "testData.g7m9tz2xuk.html",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\testData.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1571"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"VB5rdQ1BTsWeNvtcxR3hE9O3IrwSuWTZBEmqtIGxfOc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 22:46:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "g7m9tz2xuk"
+        },
+        {
+          "Name": "label",
+          "Value": "testData.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-VB5rdQ1BTsWeNvtcxR3hE9O3IrwSuWTZBEmqtIGxfOc="
+        }
+      ]
+    },
+    {
+      "Route": "testData.html",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\testData.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1571"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"VB5rdQ1BTsWeNvtcxR3hE9O3IrwSuWTZBEmqtIGxfOc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 22:46:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-VB5rdQ1BTsWeNvtcxR3hE9O3IrwSuWTZBEmqtIGxfOc="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/1001_PART_202401.CSV",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1001_PART_202401.CSV",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "53834"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"kdKLqZ26r4Xvjew7w+Qm8c44hEhgcCTPRR+Satjt7rw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-kdKLqZ26r4Xvjew7w+Qm8c44hEhgcCTPRR+Satjt7rw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/1001_PART_202401.zvf0pl3awu.CSV",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1001_PART_202401.CSV",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "53834"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"kdKLqZ26r4Xvjew7w+Qm8c44hEhgcCTPRR+Satjt7rw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zvf0pl3awu"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/1001_PART_202401.CSV"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-kdKLqZ26r4Xvjew7w+Qm8c44hEhgcCTPRR+Satjt7rw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/1001_PART_202404.5jtbshohyo.CSV",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1001_PART_202404.CSV",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "49337"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"v1XnDFlJTK3U340F1QwsRvwwWwYhxz+eJh7+RCWSOaM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5jtbshohyo"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/1001_PART_202404.CSV"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-v1XnDFlJTK3U340F1QwsRvwwWwYhxz+eJh7+RCWSOaM="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/1001_PART_202404.CSV",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1001_PART_202404.CSV",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "49337"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"v1XnDFlJTK3U340F1QwsRvwwWwYhxz+eJh7+RCWSOaM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-v1XnDFlJTK3U340F1QwsRvwwWwYhxz+eJh7+RCWSOaM="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/2002_BALG_202402.CSV",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\2002_BALG_202402.CSV",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16622"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HRQJGTDNXjE/MLKgmKRJ+Zp9a4CBgWMYxMEOByoQdBE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HRQJGTDNXjE/MLKgmKRJ+Zp9a4CBgWMYxMEOByoQdBE="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/2002_BALG_202402.h3ej6s1mfk.CSV",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\2002_BALG_202402.CSV",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16622"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HRQJGTDNXjE/MLKgmKRJ+Zp9a4CBgWMYxMEOByoQdBE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "h3ej6s1mfk"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/2002_BALG_202402.CSV"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HRQJGTDNXjE/MLKgmKRJ+Zp9a4CBgWMYxMEOByoQdBE="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/2002_PART_202401.CSV",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\2002_PART_202401.CSV",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "52876"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"xWdhtfhBS0bVfI6sRFES0iH4y3Kc6L2WlHk8dKj0+kc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-xWdhtfhBS0bVfI6sRFES0iH4y3Kc6L2WlHk8dKj0+kc="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/2002_PART_202401.rc7keash3d.CSV",
+      "AssetFile": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\2002_PART_202401.CSV",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "52876"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"xWdhtfhBS0bVfI6sRFES0iH4y3Kc6L2WlHk8dKj0+kc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 17 Jun 2025 18:11:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rc7keash3d"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/2002_PART_202401.CSV"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-xWdhtfhBS0bVfI6sRFES0iH4y3Kc6L2WlHk8dKj0+kc="
         }
       ]
     }
