@@ -10,11 +10,18 @@
         </div>
         <div class="card-body">
             <form id="uploadForm" class="row g-3 align-items-end">
-                <div class="col-md-9">
+
+                <div class="col-md-2">
+                    <label for="usuario" class="form-label">Usuário</label>
+                    <input type="text" class="form-control" id="usuario" value="@User.Identity.Name">
+                </div>
+
+                <div class="col-md-8">
                     <label for="files" class="form-label">Selecione os arquivos</label>
                     <input type="file" class="form-control" id="files" multiple required>
                 </div>
-                <div class="col-md-3">
+
+                <div class="col-md-2">
                     <button type="button" class="btn btn-primary w-100" onclick="handleUpload()">
                         <i class="fas fa-upload"></i> Upload
                     </button>
@@ -23,30 +30,127 @@
         </div>
     </div>
 
-    <!-- Tabela de Lotes -->
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title mb-0">Lotes de Upload</h5>
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>ID Upload</th>
-                            <th>ID Lote</th>
-                            <th>Arquivos</th>
-                            <th>Progresso</th>
-                            <th>Status</th>
-                            <th>Mensagem</th>
-                            <th>Data Início</th>
-                        </tr>
-                    </thead>
-                    <tbody id="batchTableBody">
-                        <!-- Preenchido via JavaScript -->
-                    </tbody>
-                </table>
+    <!-- Cards de Lotes -->
+    <div id="batchCardsContainer" class="row g-2 mb-4">
+        <!-- Card Resumo Geral -->
+        <div class="col-12">
+
+            <div id="cardResumoGeral" class="batch-card" style="border:2px solid #0d6efd; display:none;">
+                <div class="batch-title"><b>Resumo do Upload</b></div>
+                <div class="batch-row" style="margin-bottom:1em;">
+                    <span class="batch-label">Lotes:</span>
+                    <span id="resumo-lote-progresso" class="batch-value">-</span>
+                    <div class="progress" style="width:40%; min-width:120px;">
+                        <div id="resumo-lote-progressbar" class="progress-bar bg-info" style="width:0%"></div>
+                    </div>
+                    <span class="batch-label" style="margin-left:auto;">Hora Início:</span>
+                    <span id="resumo-hora-inicio" class="batch-value">-</span>
+                    <span class="batch-label">Hora Fim:</span>
+                    <span id="resumo-hora-fim" class="batch-value">-</span>
+                    <span class="batch-label">Duração:</span>
+                    <span id="resumo-duracao" class="batch-value">-</span>
+                </div>
             </div>
+
+
+            @* <div id="cardResumoGeral" class="batch-card" style="border:2px solid #0d6efd; display:none;">
+                <div class="batch-title"><b>Resumo do Upload</b></div>
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <b>Lotes:</b>
+                        <span id="resumo-lote-progresso">-</span>
+                        <div class="progress"
+                            style="height:8px; display:inline-block; width:60%; vertical-align:middle; margin-left:1em;">
+                            <div id="resumo-lote-progressbar" class="progress-bar bg-info" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-end"><b>Hora Início:</b> <span id="resumo-hora-inicio">-</span></div>
+                    <div class="col-md-2 text-end"><b>Hora Fim:</b> <span id="resumo-hora-fim">-</span></div>
+                    <div class="col-md-2 text-end"><b>Duração:</b> <span id="resumo-duracao">-</span></div>
+                </div>
+            </div> *@
+        </div>
+        <!-- Card Lote Atual -->
+        <div class="col-12">
+            <div id="cardLoteAtual" class="batch-card" style="border:2px solid #ffc107; display:none;">
+                <!-- Conteúdo preenchido via JS -->
+            </div>
+            <template id="tpl-lote-atual">
+                <div class="batch-row" style="font-size:1.08em;font-weight:700;color:#2c3e50;margin-bottom:0.5em;">
+                    <span style="color:#0d6efd;">Lote em execução:</span> <b class="tpl-num"></b> (<span
+                        class="tpl-qtd-arq"></span> arquivos)
+                    <span class="batch-label" style="margin-left:1.5em;">Usuário:</span> <span
+                        class="batch-value tpl-usuario"></span>
+                    <span class="batch-label" style="margin-left:1.5em;">Início:</span> <span
+                        class="batch-value tpl-inicio"></span>
+                    <span class="batch-label" style="margin-left:1.5em;">Fim:</span> <span
+                        class="batch-value tpl-fim"></span>
+                    <span class="batch-label" style="margin-left:1.5em;">Duração:</span> <span
+                        class="batch-value tpl-duracao"></span>
+                </div>
+                <div class="batch-row" style="align-items:center;">
+                    <span style="margin-right:2em;" class="tpl-arquivo-atual"></span>
+                    <div class="progress" style="flex:1;max-width:300px;margin:0 1em;">
+                        <div class="progress-bar tpl-bar" role="progressbar" style="width:0%" aria-valuenow="0"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <span class="batch-label">Status:</span>
+                    <span class="badge tpl-status"></span>
+                </div>
+                <div class="batch-row">
+                    <span class="batch-label">Mensagem:</span>
+                    <span class="batch-message tpl-msg"></span>
+                </div>
+            </template>
+        </div>
+        <!-- Histórico de Lotes -->
+        <div class="col-12">
+            <div id="cardHistoricoLotes" style="display:none;">
+                <!-- Cards de lotes finalizados serão inseridos aqui via JS -->
+            </div>
+@* 
+            <template id="tpl-historico-lote">
+                <div class="batch-card mb-2">
+                    <div class="batch-row">
+                        <span class="batch-label">Lote</span>
+                        <span class="batch-value">#<span class="tpl-num"></span></span>
+                        <span class="batch-label">Usuário</span>
+                        <span class="batch-value tpl-usuario"></span>
+                        <span class="batch-label">Início</span>
+                        <span class="batch-value tpl-inicio"></span>
+                        <span class="batch-label">Fim</span>
+                        <span class="batch-value tpl-fim"></span>
+                        <span class="batch-label">Duração</span>
+                        <span class="batch-value tpl-duracao"></span>
+                        <span class="batch-label">Status</span>
+                        <span class="badge tpl-status"></span>
+                        <span class="batch-label">Qtd Arquivos</span>
+                        <span class="batch-value tpl-qtd-arq"></span>
+                    </div>
+                    <div class="batch-row">
+                        <span class="batch-label">Mensagem:</span>
+                        <span class="batch-message tpl-msg"></span>
+                    </div>
+                </div>
+            </template> *@
+
+            <template id="tpl-historico-lote">
+                <div class="batch-card mb-2">
+                    <div class="batch-row" style="font-size:1.05em;font-weight:600;color:#2c3e50;align-items:center;">
+                        <b>Lote #<span class="tpl-num"></span></b>
+                        <span class="batch-label" style="margin-left:1.5em;">Usuário:</span> <span class="batch-value tpl-usuario"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Início:</span> <span class="batch-value tpl-inicio"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Fim:</span> <span class="batch-value tpl-fim"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Duração:</span> <span class="batch-value tpl-duracao"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Status:</span> <span class="badge tpl-status"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Qtd Arquivos:</span> <span class="tpl-qtd-arq"></span>
+                    </div>
+                    <div class="batch-row">
+                        <span class="batch-label">Mensagem:</span>
+                        <span class="batch-message tpl-msg"></span>
+                    </div>
+                </div>
+            </template>
         </div>
     </div>
 
@@ -95,17 +199,37 @@
     </div>
 </div>
 
+<!-- Modal de Erros do Lote -->
+<div class="modal fade" id="batchErrorsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Erros do Lote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="batchErrorsContent">
+                    <!-- Erros detalhados do lote serão exibidos aqui via JS -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
     .card {
         border: none;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         margin-bottom: 1rem;
     }
 
     .card-header {
         background-color: #fff;
-        border-bottom: 1px solid rgba(0,0,0,0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         padding: 1rem;
     }
 
@@ -125,7 +249,7 @@
     .table td {
         vertical-align: middle;
         padding: 0.75rem 1rem;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .table tbody tr:hover {
@@ -178,159 +302,208 @@
         color: #2c3e50;
         font-weight: 500;
     }
+
+    @* .batch-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 1px 4px rgba(44,62,80,0.07);
+        background: #fff;
+        margin-bottom: 0.5rem;
+        font-size: 0.92rem;
+        padding: 1rem 1.2rem;
+        transition: box-shadow 0.2s;
+        min-width: 320px;
+    }
+    .batch-card:hover {
+        box-shadow: 0 2px 8px rgba(44,62,80,0.13);
+    }
+    .batch-card .badge {
+        font-size: 0.85em;
+        cursor: default;
+    }
+    .batch-card .badge.status-error {
+        cursor: pointer;
+        text-decoration: underline dotted;
+    }
+    .batch-card .progress {
+        height: 6px;
+        margin-bottom: 0.5rem;
+    }
+    .batch-card .batch-label {
+        color: #888;
+        font-size: 0.85em;
+        margin-right: 0.5em;
+    }
+    .batch-card .batch-value {
+        font-weight: 500;
+        margin-right: 1.2em;
+    }
+    .batch-card .batch-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 0.3em;
+    }
+    .batch-card .batch-row:last-child {
+        margin-bottom: 0;
+    }
+    .batch-card .batch-title {
+        font-size: 1.08em;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.2em;
+    }
+    .batch-card .batch-message {
+        font-size: 0.93em;
+        color: #666;
+        margin-top: 0.2em;
+    }
+    @@media (max-width: 600px) {
+        .batch-card { font-size: 0.85rem; padding: 0.7rem 0.5rem; }
+        .batch-card .batch-title { font-size: 1em; }
+    } *@
+
+    .batch-card {
+        border: 1.5px solid #e0e0e0;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+        background: #fff;
+        margin-bottom: 1.2rem;
+        font-size: 1rem;
+        padding: 1.3rem 1.5rem;
+        transition: box-shadow 0.2s, border 0.2s;
+        min-width: 280px;
+        max-width: 100%;
+        position: relative;
+    }
+
+    .batch-card:hover {
+        box-shadow: 0 4px 24px rgba(44, 62, 80, 0.13);
+        border-color: #0d6efd;
+    }
+
+    .batch-title {
+        font-size: 1.18em;
+        font-weight: 700;
+        color: #0d6efd;
+        margin-bottom: 0.7em;
+        letter-spacing: 0.5px;
+    }
+
+    .batch-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 0.5em;
+        gap: 1.2em;
+    }
+
+    .batch-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .batch-label {
+        color: #888;
+        font-size: 0.97em;
+        margin-right: 0.4em;
+        font-weight: 500;
+    }
+
+    .batch-value {
+        font-weight: 600;
+        color: #222;
+        margin-right: 1.2em;
+    }
+
+    .badge {
+        padding: 0.45em 1em;
+        font-weight: 600;
+        font-size: 0.98em;
+        border-radius: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .badge.bg-success,
+    .badge.bg-success-light {
+        background: #e6f9ed;
+        color: #1a7f37;
+    }
+
+    .badge.bg-warning,
+    .badge.bg-warning-light {
+        background: #fff8e1;
+        color: #b8860b;
+    }
+
+    .badge.bg-danger,
+    .badge.bg-danger-light {
+        background: #ffeaea;
+        color: #c0392b;
+    }
+
+    .badge.bg-info,
+    .badge.bg-info-light {
+        background: #e7f3fe;
+        color: #0d6efd;
+    }
+
+    .badge.bg-secondary {
+        background: #f4f4f4;
+        color: #555;
+    }
+
+    .progress {
+        height: 10px;
+        border-radius: 5px;
+        background-color: #f0f2f5;
+        box-shadow: none;
+        margin: 0 0.5em;
+        flex: 1 1 120px;
+    }
+
+    .progress-bar {
+        background: linear-gradient(90deg, #0d6efd 60%, #5bc0eb 100%);
+        font-size: 0.9em;
+        font-weight: 600;
+        border-radius: 5px;
+        transition: width 0.4s;
+    }
+
+    @@media
+    (max-width: 900px) {
+        .batch-card {
+            padding: 1rem 0.7rem;
+        }
+
+        .batch-title {
+            font-size: 1.05em;
+        }
+
+        .batch-row {
+            gap: 0.7em;
+        }
+    }
+
+    @@media
+    (max-width: 600px) {
+        .batch-card {
+            font-size: 0.93rem;
+            padding: 0.7rem 0.3rem;
+        }
+
+        .batch-title {
+            font-size: 1em;
+        }
+
+        .batch-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.3em;
+        }
+    }
 </style>
 
 @section Scripts {
     <script src="~/js/DevonnoUploader.js"></script>
-
-    <script>
-        //console.log('Inicializando conexão SignalR na View...');
-        
-        //let connection = new signalR.HubConnectionBuilder()
-        //    .withUrl("/importacaoHub")
-        //    .withAutomaticReconnect()
-        //    .build();
-
-        //connection.on("ReceberStatusImportacao", function (status) {
-        //    console.log('Status recebido na View:', status);
-        //    atualizarTabelas(status);
-        //});
-
-        //connection.start()
-        //    .then(() => {
-        //        console.log('Conexão SignalR estabelecida na View');
-        //    })
-        //    .catch(function (err) {
-        //        console.error('Erro na conexão SignalR na View:', err.toString());
-        //    });
-
-        //function atualizarTabelas(status) {
-        //    try {
-        //        console.log('Atualizando tabelas com status:', status);
-
-        //        // Validação dos dados
-        //        if (!status || !status.nomeArquivo) {
-        //            console.error('Status inválido:', status);
-        //            return;
-        //        }
-
-        //        // Atualiza a tabela de lotes
-        //        const batchTableBody = document.getElementById('batchTableBody');
-        //        if (!batchTableBody) {
-        //            console.error('Elemento batchTableBody não encontrado');
-        //            return;
-        //        }
-
-        //        const row = document.createElement('tr');
-        //        const dataHora = status.dataHora ? new Date(status.DataHora).toLocaleString() : '-';
-                
-        //        row.innerHTML = `
-        //            <td>${status.NomeArquivo || '-'}</td>
-        //            <td>${status.Status || 'DESCONHECIDO'}</td>
-        //            <td>${dataHora}</td>
-        //            <td>
-        //                <span class="badge ${getStatusClass(status.Status)}">
-        //                    ${status.Status || 'DESCONHECIDO'}
-        //                </span>
-        //            </td>
-        //        `;
-                
-        //        batchTableBody.insertBefore(row, batchTableBody.firstChild);
-        //        console.log('Tabela de lotes atualizada');
-
-        //        // Atualiza a tabela de arquivos
-        //        const fileTableBody = document.getElementById('fileTableBody');
-        //        if (!fileTableBody) {
-        //            console.error('Elemento fileTableBody não encontrado');
-        //            return;
-        //        }
-
-        //        const fileRow = document.createElement('tr');
-        //        const dataFim = status.Status === 'FINALIZADO' ? dataHora : '-';
-                
-        //        fileRow.innerHTML = `
-        //            <td>${status.NomeArquivo || '-'}</td>
-        //            <td>-</td>
-        //            <td>-</td>
-        //            <td>
-        //                <span class="badge ${getStatusClass(status.Status)}">
-        //                    ${status.Status || 'DESCONHECIDO'}
-        //                </span>
-        //            </td>
-        //            <td>${dataHora}</td>
-        //            <td>${dataFim}</td>
-        //        `;
-                
-        //        fileTableBody.insertBefore(fileRow, fileTableBody.firstChild);
-        //        console.log('Tabela de arquivos atualizada');
-        //    } catch (error) {
-        //        console.error('Erro ao atualizar tabelas:', error);
-        //    }
-        //}
-
-        function getStatusClass(status) {
-            if (!status) return 'bg-secondary';
-            
-            switch (status.toUpperCase()) {
-                case 'FINALIZADO':
-                    return 'bg-success';
-                case 'PROCESSANDO':
-                    return 'bg-primary';
-                case 'ERRO':
-                    return 'bg-danger';
-                case 'AGUARDANDO':
-                    return 'bg-warning';
-                default:
-                    return 'bg-secondary';
-            }
-        }
-
-        async function handleUpload() {
-            console.log('Iniciando upload...');
-            
-            const fileInput = document.getElementById('files');
-            const files = fileInput.files;
-
-            if (files.length === 0) {
-                console.warn('Nenhum arquivo selecionado');
-                showError('Por favor, selecione pelo menos um arquivo.');
-                return;
-            }
-
-            console.log(`Arquivos selecionados: ${files.length}`);
-
-            const formData = new FormData();
-            for (let i = 0; i < files.length; i++) {
-                formData.append('arquivos', files[i]);
-                console.log(`Arquivo ${i + 1}: ${files[i].name} (${files[i].size} bytes)`);
-            }
-
-            try {
-                console.log('Enviando requisição para /api/ImportacaoApi/upload');
-                const response = await fetch('/api/ImportacaoApi/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    console.error('Erro na resposta:', error);
-                    throw new Error(error.erro || 'Erro ao fazer upload');
-                }
-
-                const result = await response.json();
-                console.log('Upload iniciado com sucesso:', result);
-            } catch (error) {
-                console.error('Erro durante upload:', error);
-                showError(error.message);
-            }
-        }
-
-        function showError(message) {
-            console.error('Exibindo erro:', message);
-            const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-            document.getElementById('errorMessage').textContent = message;
-            errorModal.show();
-        }
-    </script>
+    <script src="~/js/BatchCardsRenderer.js"></script>
 }

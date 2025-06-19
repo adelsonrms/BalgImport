@@ -18,6 +18,24 @@ namespace BalgImport.Hubs
             await Clients.All.SendAsync("AtualizarStatus", status);
         }
 
+        public async Task AtualizarResumo(object resumo)
+        {
+            _logger.LogInformation($"SignalR: AtualizarResumo: {resumo}");
+            await Clients.All.SendAsync("AtualizarResumo", resumo);
+        }
+
+        public async Task AtualizarLoteAtual(object loteAtual)
+        {
+            _logger.LogInformation($"SignalR: AtualizarLoteAtual: {loteAtual}");
+            await Clients.All.SendAsync("AtualizarLoteAtual", loteAtual);
+        }
+
+        public async Task AdicionarHistoricoLote(object loteFinalizado)
+        {
+            _logger.LogInformation($"SignalR: AdicionarHistoricoLote: {loteFinalizado}");
+            await Clients.All.SendAsync("AdicionarHistoricoLote", loteFinalizado);
+        }
+
         public override async Task OnConnectedAsync()
         {
             _logger.LogInformation($"SignalR: Cliente conectado: {Context.ConnectionId}");

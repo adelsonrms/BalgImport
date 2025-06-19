@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\BatchCardsRenderer.js",
+      "PackagePath": "staticwebassets\\js\\BatchCardsRenderer.js"
+    },
+    {
       "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\js\\DevonnoUploader.js",
       "PackagePath": "staticwebassets\\js\\DevonnoUploader.js"
     },
@@ -259,6 +263,10 @@
     {
       "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1001_PART_202404.CSV",
       "PackagePath": "staticwebassets\\uploads\\1001_PART_202404.CSV"
+    },
+    {
+      "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\1022_BALG_202506.CSV",
+      "PackagePath": "staticwebassets\\uploads\\1022_BALG_202506.CSV"
     },
     {
       "Id": "F:\\Cloud\\OneDrive\\source\\github\\BalgImport\\BalgImport\\wwwroot\\uploads\\2002_BALG_202402.CSV",

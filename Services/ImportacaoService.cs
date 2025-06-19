@@ -7,12 +7,31 @@ using CsvHelper.Configuration.Attributes;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 
+using Projeto_BALG_Import.Controllers;
+
 using System.Data;
 using System.Globalization;
 
 namespace Projeto_BALG_Import.Services
 {
     #region Models
+
+    public class Arquivo: ArquivoBase
+    {
+        
+        public string FileName { get; set; }
+        public IFormFile FormFile { get; internal set; }
+    }
+
+    public abstract class ArquivoBase
+    {
+        public int idUpload { get; set; }
+        
+        public DateTime DataImportacao { get; set; }
+        public bool FlagErro { get; set; }
+        public string MensagemErro { get; set; }
+        public string Status { get; set; }
+    }
 
     public class LayoutConfig
     {
@@ -24,8 +43,12 @@ namespace Projeto_BALG_Import.Services
 
     public class LoteProcessamento
     {
+        public LoteProcessamento()
+        {
+                Arquivos = new List<Arquivo>();
+        }
         public int IdLote { get; set; }
-        public List<IFormFile> Arquivos { get; set; }
+        public List<Arquivo> Arquivos { get; set; }
         public string Status { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime? DataFim { get; set; }
@@ -33,9 +56,18 @@ namespace Projeto_BALG_Import.Services
         public string codProc { get; internal set; }
         public int idArq { get; internal set; }
         public int idUpload { get; internal set; }
+        public int ArquivosProcessados
+        {
+            get
+            {
+                return this.Arquivos.Count(a => a.Status == StatusTipos.Concluido);
+            }
+        }
+
+        public string Usuario { get;  set; }
     }
 
-    public class ArquivoBALG
+    public class ArquivoBALG 
     {
         [Name("0FISCPER")]
         [Index(0)]
@@ -69,7 +101,7 @@ namespace Projeto_BALG_Import.Services
     public interface IImportacaoService
     {
         Task<int> ProcessarDaPastaAsync();
-        Task<List<LoteProcessamento>> DividirEmLotesAsync(List<IFormFile> arquivos);
+        Task<List<LoteProcessamento>> DividirEmLotesAsync(List<Arquivo> arquivos);
         Task<LoteProcessamento> ProcessarLoteAsync(LoteProcessamento lote);
     }
 
@@ -80,50 +112,37 @@ namespace Projeto_BALG_Import.Services
         private const int TAMANHO_LOTE = 25;
         private readonly ILogger<ImportacaoService> _logger;
         private readonly IHubContext<SignalRHub> _hubContext;
+        private readonly StatusImportacaoService _statusService;
 
-        public ImportacaoService(IConfiguration configuration, ILogger<ImportacaoService> logger, IHubContext<SignalRHub> hubContext)
+
+        public ImportacaoService(IConfiguration configuration, ILogger<ImportacaoService> logger, IHubContext<SignalRHub> hubContext, StatusImportacaoService statusService)
         {
             _connectionString = $"Server=(localdb)\\mssqllocaldb;Database=DB_CONSOLIDADO;Trusted_Connection=True;MultipleActiveResultSets=true";
             _pastaOrigem = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
             _logger = logger;
             _hubContext = hubContext;
+            _statusService = statusService;
         }
 
         #region Processamento via API
 
-
-
-        private async Task ProcessarArquivoIFormFileAsync(IFormFile arquivo, LoteProcessamento lote)
+        private async Task ProcessarArquivoIFormFileAsync(Arquivo arquivo, LoteProcessamento lote)
         {
             int idUpload = lote.IdLote;
 
             _logger.LogInformation($"{lote.codProc} -> Iniciando leitura do arquivo IFormFile {arquivo.FileName}");
 
-            string filePath = Path.Combine(_pastaOrigem, arquivo.FileName);
-
             try
             {
-                Directory.CreateDirectory(_pastaOrigem);
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = arquivo.FormFile.OpenReadStream())
                 {
-                    await arquivo.CopyToAsync(stream);
+                    await ProcessarArquivoAsync(stream, arquivo.FileName, lote);
                 }
-
-                _logger.LogInformation($"{lote.codProc} -> Arquivo IFormFile {arquivo.FileName} salvo em {filePath}");
-                await ProcessarArquivoAsync(filePath, lote);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"{lote.codProc} -> Erro ao processar arquivo {arquivo.FileName}");
                 throw;
-            }
-            finally
-            {
-                if (File.Exists(filePath))
-                {
-                    File.Delete(filePath);
-                    _logger.LogInformation($"{lote.codProc} -> Arquivo temporário {filePath} removido");
-                }
             }
         }
 
@@ -149,16 +168,14 @@ namespace Projeto_BALG_Import.Services
 
         #region Processamento Individual do Arquivo
 
-        private async Task ProcessarArquivoAsync(string caminhoArquivo, LoteProcessamento lote)
+        private async Task ProcessarArquivoAsync(Stream stream, string nomeArquivo, LoteProcessamento lote)
         {
-            var nomeArquivo = Path.GetFileName(caminhoArquivo);
             int idUpload = lote.IdLote;
-
-            _logger.LogInformation($"{lote.codProc} -> Iniciando processamento do arquivo {nomeArquivo}");
+            _logger.LogInformation($"{lote.codProc} -> Iniciando processamento do arquivo {nomeArquivo} (stream)");
 
             try
             {
-                var dados = await LerCsvComDuploCabecalhoAsync(caminhoArquivo);
+                var dados = await LerCsvComDuploCabecalhoAsync(stream);
                 _logger.LogInformation($"{lote.codProc} -> # 01 - CSV lido com sucesso. {dados.Count} registros encontrados");
 
                 var dt = GerarDataTable(dados, idUpload, nomeArquivo);
@@ -174,19 +191,47 @@ namespace Projeto_BALG_Import.Services
             }
         }
 
+        private async Task ProcessarArquivoAsync(string caminhoArquivo, LoteProcessamento lote)
+        {
+            var nomeArquivo = Path.GetFileName(caminhoArquivo);
+            int idUpload = lote.IdLote;
+
+            _logger.LogInformation($"{lote.codProc} -> Iniciando processamento do arquivo {nomeArquivo}");
+
+            try
+            {
+                using (var stream = new FileStream(caminhoArquivo, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    var dados = await LerCsvComDuploCabecalhoAsync(stream);
+                    _logger.LogInformation($"{lote.codProc} -> # 01 - CSV lido com sucesso. {dados.Count} registros encontrados");
+
+                    var dt = GerarDataTable(dados, idUpload, nomeArquivo);
+                    _logger.LogInformation($"{lote.codProc} -> DataTable gerado com {dt.Rows.Count} linhas");
+
+                    await ProcessarNoSQLAsync(dt, lote, nomeArquivo);
+                    _logger.LogInformation($"{lote.codProc} -> # 04 - Arquivo {nomeArquivo} processado com sucesso no SQL");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{lote.codProc} -> Erro ao processar arquivo {nomeArquivo}");
+                throw;
+            }
+        }
+
         #endregion
 
         #region Leitura CSV com Detecção de Layout
 
-        private async Task<List<ArquivoBALG>> LerCsvComDuploCabecalhoAsync(string filePath)
+        private async Task<List<ArquivoBALG>> LerCsvComDuploCabecalhoAsync(Stream stream)
         {
-            using var reader = new StreamReader(filePath);
+            using var reader = new StreamReader(stream, leaveOpen: true);
 
             // Detecta o layout do arquivo
             var layout = await DetectarLayoutAsync(reader);
 
             // Volta o stream para o início
-            reader.BaseStream.Position = 0;
+            stream.Position = 0;
             reader.DiscardBufferedData();
 
             using var csv = new CsvReader(reader, new CsvConfiguration(layout.Cultura)
@@ -339,8 +384,9 @@ namespace Projeto_BALG_Import.Services
 
         #region DataTable para Bulk
 
-        private DataTable GerarDataTable(List<ArquivoBALG> dados, int idUpload, string nomeArquivo)
+        private DataTable GerarDataTable<T>(List<T> dados, int idUpload, string nomeArquivo) where T : ArquivoBALG
         {
+
             var dt = new DataTable();
 
             // Colunas exatamente como na tabela STG_BALG
@@ -374,6 +420,55 @@ namespace Projeto_BALG_Import.Services
             }
 
             return dt;
+
+
+            //var dt = new DataTable();
+            //var tipo = typeof(T);
+
+            //// Adiciona colunas dinamicamente baseadas nas propriedades da classe
+            //foreach (var prop in tipo.GetProperties())
+            //{
+            //    // Converte o tipo da propriedade para o tipo do DataTable
+            //    Type columnType = prop.PropertyType;
+            //    if (prop.PropertyType == typeof(DateTime?))
+            //        columnType = typeof(DateTime);
+            //    else if (prop.PropertyType == typeof(int?))
+            //        columnType = typeof(int);
+            //    else if (prop.PropertyType == typeof(decimal?))
+            //        columnType = typeof(decimal);
+
+            //    dt.Columns.Add(prop.Name, columnType);
+            //}
+
+            //foreach (var item in dados)
+            //{
+            //    var row = dt.NewRow();
+
+            //    // Preenche todas as propriedades dinamicamente
+            //    foreach (var prop in tipo.GetProperties())
+            //    {
+            //        var valor = prop.GetValue(item);
+            //        if (valor == null)
+            //        {
+            //            row[prop.Name] = DBNull.Value;
+            //        }
+            //        else
+            //        {
+            //            row[prop.Name] = valor;
+            //        }
+            //    }
+
+            //    // Atualiza campos padrão
+            //    row["IdUpload"] = idUpload;
+            //    row["NomeArquivo"] = nomeArquivo;
+            //    row["DataImportacao"] = DateTime.Now;
+            //    row["FlagErro"] = false;
+            //    row["MensagemErro"] = DBNull.Value;
+
+            //    dt.Rows.Add(row);
+            //}
+
+            //return dt;
         }
 
         #endregion
@@ -404,86 +499,31 @@ namespace Projeto_BALG_Import.Services
             // Notifica via SignalR
             try
             {
-                var statusUpdate = new
-                {
-                    idUpload = idUpload,
-                    idLote = lote.IdLote,
-                    idArquivo = lote.idArq,
-                    nomeArquivo = lote.codProc,
-                    etapa = etapa,
-                    status = status,
-                    mensagem = mensagem,
-                    dataHora = DateTime.Now,
-                    totalArquivos = lote.Arquivos?.Count ?? 0,
-                    arquivosProcessados = lote.Arquivos?.Count ?? 0
-                };
+                //var statusUpdate = new
+                //{
+                //    idUpload = idUpload,
+                //    idLote = lote.IdLote,
+                //    idArquivo = lote.idArq,
+                //    nomeArquivo = lote.codProc,
+                //    etapa = etapa,
+                //    status = status,
+                //    mensagem = mensagem,
+                //    dataHora = DateTime.Now,
+                //    totalArquivos = lote.Arquivos?.Count ?? 0,
+                //    arquivosProcessados = lote.Arquivos?.Count ?? 0
+                //};
 
                 _logger.LogInformation($"SignalR: Enviando atualização - {lote.codProc} - {status}");
-                await _hubContext.Clients.All.SendAsync("ReceberStatusImportacao", statusUpdate);
+
+//                await _statusService.EnviarStatus(lote, etapa, status, mensagem);
+
+
+                //await _hubContext.Clients.All.SendAsync("ReceberStatusImportacao", statusUpdate);
                 _logger.LogInformation($"SignalR: Atualização enviada com sucesso");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "SignalR: Erro ao enviar atualização");
-            }
-        }
-
-        private async Task CriarTabelasSeNecessarioAsync(SqlConnection conn)
-        {
-            // Cria tabela UPLOAD_ARQUIVOS se não existir
-            using (var cmd = new SqlCommand(@"
-                IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'UPLOAD_ARQUIVOS')
-                BEGIN
-                    CREATE TABLE UPLOAD_ARQUIVOS (
-                        C_ID_UPLOAD INT IDENTITY(1,1) PRIMARY KEY,
-                        R_NOME_ARQ VARCHAR(255),
-                        STATUS VARCHAR(50),
-                        DT_INICIO DATETIME DEFAULT GETDATE(),
-                        DT_FIM DATETIME NULL,
-                        MENSAGEM_ERRO VARCHAR(MAX) NULL
-                    )
-                END", conn))
-            {
-                await cmd.ExecuteNonQueryAsync();
-            }
-
-            // Cria tabela STG_BALG se não existir
-            using (var cmd = new SqlCommand(@"
-                IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'STG_BALG')
-                BEGIN
-                    CREATE TABLE STG_BALG (
-                        C_ID_UPLOAD int,
-                        R_NOME_ARQ varchar(255),
-                        D_BASE datetime,
-                        CD_EMP varchar(50),
-                        CD_CONTA varchar(50),
-                        PRZ varchar(50),
-                        MOE varchar(50),
-                        SLD decimal(18,2),
-                        FLAG_ERRO bit,
-                        MENSAGEM_ERRO varchar(255),
-                        DT_IMPORTACAO datetime
-                    )
-                END", conn))
-            {
-                await cmd.ExecuteNonQueryAsync();
-            }
-
-            // Cria tabela T_LOG_PROCESSAMENTO se não existir
-            using (var cmd = new SqlCommand(@"
-                IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'T_LOG_PROCESSAMENTO')
-                BEGIN
-                    CREATE TABLE T_LOG_PROCESSAMENTO (
-                        ID_LOG INT IDENTITY(1,1) PRIMARY KEY,
-                        C_ID_UPLOAD INT,
-                        DATA_LOG DATETIME DEFAULT GETDATE(),
-                        ETAPA VARCHAR(100),
-                        STATUS VARCHAR(50),
-                        MENSAGEM VARCHAR(MAX) NULL
-                    )
-                END", conn))
-            {
-                await cmd.ExecuteNonQueryAsync();
             }
         }
 
@@ -631,19 +671,6 @@ namespace Projeto_BALG_Import.Services
 
             return;
         }
-
-        private async Task EnviarParaStagingAsync(DataTable dt, SqlConnection conn, SqlTransaction transaction)
-        {
-            // Este método não é mais necessário pois usamos tabelas temporárias
-            throw new NotImplementedException("Método substituído por processamento com tabelas temporárias");
-        }
-
-        private async Task ExecutarProcAsync(int idUpload, string nomeArquivo, SqlConnection conn, SqlTransaction transaction)
-        {
-            // Este método não é mais necessário pois usamos tabelas temporárias
-            throw new NotImplementedException("Método substituído por processamento com tabelas temporárias");
-        }
-
         #endregion
 
         #region Controle de Upload (Status e Logs)
@@ -688,7 +715,7 @@ namespace Projeto_BALG_Import.Services
 
         #endregion
 
-        public async Task<List<LoteProcessamento>> DividirEmLotesAsync(List<IFormFile> arquivos)
+        public async Task<List<LoteProcessamento>> DividirEmLotesAsync(List<Arquivo> arquivos)
         {
             _logger.LogInformation($"Iniciando divisão em lotes. Total de arquivos: {arquivos.Count}");
 
@@ -727,71 +754,56 @@ namespace Projeto_BALG_Import.Services
         {
             _logger.LogInformation($"Iniciando processamento do lote {lote.IdLote} com {lote.Arquivos.Count} arquivos");
 
-            try
-            {
-                lote.Status = "PROCESSANDO";
-                int idUpload = await CriarControleDeUploadAsync(lote.IdLote, "PASTA_UPLOAD");
+            lote.DataInicio = DateTime.Now;
+            var erros = new List<string>();
+            int arqProc = 0;
+            lote.Status = "PROCESSANDO";
+            int idUpload = await CriarControleDeUploadAsync(lote.IdLote, "PASTA_UPLOAD");
+            await AtualizarControleDeUploadAsync(lote.IdLote, lote.Status);
 
-                await AtualizarControleDeUploadAsync(lote.IdLote, lote.Status);
-int arqProc = 0;
-                // Processa arquivos sequencialmente para evitar deadlocks
-                foreach (var arquivo in lote.Arquivos)
+            // Processa arquivos sequencialmente para evitar deadlocks
+            foreach (var arquivo in lote.Arquivos)
+            {
+                try
                 {
-                    try
-                    {
-                        lote.codProc = arquivo.FileName;
-                        lote.idArq = (int)(DateTime.Now.Ticks % int.MaxValue); ;
+                    lote.codProc = arquivo.FileName;
+                    lote.idArq = (int)(DateTime.Now.Ticks % int.MaxValue);
 
-                        _logger.LogInformation($"{lote.codProc} -> {new string('-', 100)}");
-                        _logger.LogInformation($"{lote.codProc} -> Processando arquivo {arquivo.FileName} no lote {lote.IdLote}");
-                        
-                        await ProcessarArquivoComRetryAsync(arquivo, lote);
-                        arqProc++;
-                        
-                        _logger.LogInformation($"{lote.codProc} -> Arquivo {arquivo.FileName} processado com sucesso");
+                    _logger.LogInformation($"{lote.codProc} -> {new string('-', 100)}");
+                    _logger.LogInformation($"{lote.codProc} -> Processando arquivo {arquivo.FileName} no lote {lote.IdLote}");
 
-                        await _hubContext.Clients.All.SendAsync("ReceberStatusImportacao", new
-                        {
-                            idUpload = lote.idUpload,
-                            idLote = lote.IdLote,
-                            idArquivo = lote.idArq,
-                            nomeArquivo = lote.codProc,
-                            etapa = "PROCESSAMENTO",
-                            status = "ARQUIVO PROCESSADO",
-                            mensagem = $" Arquivo {arquivo.FileName} processado com sucesso",
-                            dataHora = DateTime.Now,
-                            totalArquivos = lote.Arquivos?.Count ?? 0,
-                            arquivosProcessados = arqProc
-                        });
+                    await _statusService.EnviarStatus(lote, "PROCESSAMENTO", "PROCESSANDO", $"Processando arquivo {arquivo.FileName}");
 
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, $"{lote.codProc} -> Erro ao processar arquivo {arquivo.FileName} no lote {lote.IdLote}");
-                        throw;
-                    }
+                    await ProcessarArquivoComRetryAsync(arquivo, lote);
+
+                    arqProc++;
+                    arquivo.Status = StatusTipos.Concluido;
+                    arquivo.FlagErro = false;
+                    arquivo.MensagemErro = null;
+                    _logger.LogInformation($"{lote.codProc} -> Arquivo {arquivo.FileName} processado com sucesso");
                 }
-
-                lote.Status = "FINALIZADO";
-                lote.DataFim = DateTime.Now;
-                lote.Mensagem = "Lote processado com sucesso";
-                await AtualizarControleDeUploadAsync(lote.IdLote, lote.Status, lote.Mensagem);
-
-                _logger.LogInformation($"Lote {lote.IdLote} finalizado com sucesso");
-                return lote;
+                catch (Exception ex)
+                {
+                    arquivo.Status = StatusTipos.Erro;
+                    arquivo.FlagErro = true;
+                    arquivo.MensagemErro = $"{ex.GetType().Name}: {ex.Message}\n{ex.StackTrace}";
+                    erros.Add($"Arquivo: {arquivo.FileName} - Erro: {ex.Message}");
+                    _logger.LogError(ex, $"{lote.codProc} -> Erro ao processar arquivo {arquivo.FileName} no lote {lote.IdLote}");
+                    // Envia status de erro detalhado via SignalR
+                    await _statusService.EnviarStatus(lote, "ERRO", "ERRO", $"Erro ao processar arquivo {arquivo.FileName}: {ex.Message}\n{ex.StackTrace}");
+                }
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"{lote.codProc} -> Erro ao processar lote {lote.IdLote}");
-                lote.Status = "ERRO";
-                lote.DataFim = DateTime.Now;
-                lote.Mensagem = ex.Message;
-                await AtualizarControleDeUploadAsync(lote.IdLote, lote.Status, lote.Mensagem);
-                throw;
-            }
+
+            lote.Status = "FINALIZADO";
+            lote.DataFim = DateTime.Now;
+            lote.Mensagem = erros.Count == 0 ? "Lote processado com sucesso" : $"Lote finalizado com {erros.Count} erro(s):\n" + string.Join("\n", erros);
+            await AtualizarControleDeUploadAsync(lote.IdLote, lote.Status, lote.Mensagem);
+
+            _logger.LogInformation($"Lote {lote.IdLote} finalizado. {lote.Mensagem}");
+            return lote;
         }
 
-        private async Task ProcessarArquivoComRetryAsync(IFormFile arquivo, LoteProcessamento lote, int maxRetries = 3)
+        private async Task ProcessarArquivoComRetryAsync(Arquivo arquivo, LoteProcessamento lote, int maxRetries = 3)
         {
             var retryCount = 0;
             var delay = TimeSpan.FromSeconds(2); // Delay inicial de 2 segundos

@@ -1,9 +1,12 @@
 using BalgImport.Hubs;
-
+using BalgImport.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System;
+using System.Threading.Tasks;
 
 using Projeto_BALG_Import.Services;
+using BalgImport.Services;
 
 namespace Projeto_BALG_Import.Controllers
 {
@@ -14,23 +17,96 @@ namespace Projeto_BALG_Import.Controllers
         private readonly IImportacaoService _importacaoService;
         private readonly IHubContext<ImportacaoHub> _hubContext;
         private readonly ILogger<ImportacaoApiController> _logger;
+        private readonly StatusImportacaoService _statusService;
+        private readonly TestDataGenerator _testDataGenerator;
 
         public ImportacaoApiController(
             IImportacaoService importacaoService,
             IHubContext<ImportacaoHub> hubContext,
-            ILogger<ImportacaoApiController> logger)
+            ILogger<ImportacaoApiController> logger, StatusImportacaoService statusService, TestDataGenerator testDataGenerator)
         {
             _importacaoService = importacaoService;
             _hubContext = hubContext;
             _logger = logger;
+            this._statusService = statusService;
+            _testDataGenerator = testDataGenerator;
         }
 
-        [HttpPost("upload")]
-        public async Task<IActionResult> UploadArquivos(IFormFile[] arquivos)
+        [HttpGet("gerar-id-unico")]
+        public IActionResult GerarIdUnico()
         {
             try
             {
-                var idUpload = (int)(DateTime.Now.Ticks % int.MaxValue);
+                // Gera um ID único baseado no timestamp atual
+                // Formato: yyMMddhhmmss + milissegundos (3 dígitos)
+                // Mas limitado ao range do INT (2.147.483.647)
+                var now = DateTime.Now;
+                var year = now.Year.ToString().Substring(2, 2); // Últimos 2 dígitos do ano
+                var month = now.Month.ToString().PadLeft(2, '0');
+                var day = now.Day.ToString().PadLeft(2, '0');
+                var hour = now.Hour.ToString().PadLeft(2, '0');
+                var minute = now.Minute.ToString().PadLeft(2, '0');
+                var second = now.Second.ToString().PadLeft(2, '0');
+                var millisecond = now.Millisecond.ToString().PadLeft(3, '0');
+                
+                var timestamp = $"{year}{month}{day}{hour}{minute}{second}{millisecond}";
+                var idUnico = long.Parse(timestamp);
+                
+                // Garante que o ID não exceda o limite do INT
+                if (idUnico > int.MaxValue)
+                {
+                    // Se exceder, usa apenas os primeiros dígitos
+                    idUnico = idUnico % int.MaxValue;
+                }
+                
+                _logger.LogInformation($"ID único gerado: {idUnico}");
+                
+                return Ok(new { 
+                    success = true, 
+                    idUnico = idUnico,
+                    timestamp = timestamp
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao gerar ID único");
+                return StatusCode(500, new { 
+                    success = false, 
+                    erro = "Erro ao gerar ID único",
+                    detalhes = ex.Message 
+                });
+            }
+        }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadArquivos(IFormFile[] arquivos, string idUpload, string idLote)
+        {
+            try
+            {
+                //await _testDataGenerator.GerarArquivosTesteAsync(2000, 5000);
+                //var idUpload = (int)(DateTime.Now.Ticks % int.MaxValue);
+                
+                var lote = new LoteProcessamento
+                {
+                    Arquivos = arquivos.Length > 0 ? 
+                    arquivos.Select(f => new Arquivo { FileName = f.FileName, FormFile = f }).ToList() : new List<Arquivo>(),
+                };
+
+                lote.Usuario = Request.Form["usuario"].ToString();
+
+                if (string.IsNullOrEmpty(lote.Usuario))
+                {
+                    lote.Usuario = User.Identity?.Name;
+                }
+              
+                int.TryParse(Request.Form["idUpload"], out int reqIdUpload);
+
+                lote.idUpload = reqIdUpload;
+                int.TryParse(Request.Form["idLote"], out int reqIdLote);
+
+                lote.IdLote = reqIdLote;
+
+                
 
                 _logger.LogInformation($"Recebida requisição de upload com {arquivos.Length} arquivos");
 
@@ -43,84 +119,29 @@ namespace Projeto_BALG_Import.Controllers
                     try
                     {
                         _logger.LogInformation("Iniciando divisão em lotes");
-                        var lotes = await _importacaoService.DividirEmLotesAsync(arquivos.ToList());
-                        _logger.LogInformation($"Total de lotes criados: {lotes.Count}");
 
-                        foreach (var lote in lotes)
+                        try
                         {
-                            try
-                            {
-                                lote.idUpload = idUpload;
-                                _logger.LogInformation($"Processando lote {lote.IdLote} com {lote.Arquivos.Count} arquivos");
+                            await _statusService.EnviarStatusInicial(lote);
+                            // Processa o lote
+                            await _importacaoService.ProcessarLoteAsync(lote);
 
-                                // Envia status inicial do lote
-                                await _hubContext.Clients.All.SendAsync("ReceberStatusImportacao", 
-                                new
-                                {
-                                    idUpload = idUpload,
-                                    idLote = lote.IdLote,
-                                    idArquivo = lote.idArq,
-                                    nomeArquivo = lote.codProc,
-                                    etapa = "INICIO",
-                                    status = "INICIADO",
-                                    mensagem = "Iniciando a importação dos arquivos",
-                                    dataHora = DateTime.Now,
-                                    totalArquivos = lote.Arquivos?.Count ?? 0,
-                                    arquivosProcessados = lote.Arquivos?.Count ?? 0
-                                });
+                            await _statusService.EnviarStatusConcluido(lote);
 
-                                // Processa o lote
-                                await _importacaoService.ProcessarLoteAsync(lote);
-
-
-                                await _hubContext.Clients.All.SendAsync("ReceberStatusImportacao", new
-                                {
-                                    idUpload = idUpload,
-                                    idLote = lote.IdLote,
-                                    idArquivo = lote.idArq,
-                                    nomeArquivo = lote.codProc,
-                                    etapa = "FINALIZAÇÃO",
-                                    status = "FINALIZADO",
-                                    mensagem = "Todos os arquivos do lote foram processados com sucesso",
-                                    dataHora = DateTime.Now,
-                                    totalArquivos = lote.Arquivos?.Count ?? 0,
-                                    arquivosProcessados = lote.Arquivos?.Count ?? 0
-                                });
-                            }
-                            catch (Exception ex)
-                            {
-                                _logger.LogError(ex, $"Erro ao processar lote {lote.IdLote}");
-
-                               
-
-                                await _hubContext.Clients.All.SendAsync("ReceberStatusImportacao", new
-                                {
-                                    idUpload = idUpload,
-                                    idLote = lote.IdLote,
-                                    idArquivo = lote.idArq,
-                                    nomeArquivo = lote.codProc,
-                                    etapa = "FINALIZAÇÃO",
-                                    status = "ERRO",
-                                    mensagem = $"Erro no lote {lote.IdLote}: {ex.Message}",
-                                    dataHora = DateTime.Now,
-                                    totalArquivos = lote.Arquivos?.Count ?? 0,
-                                    arquivosProcessados = lote.Arquivos?.Count ?? 0
-                                });
-                            }
                         }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, $"Erro ao processar lote {lote.IdLote}");
+                            await _statusService.EnviarStatusErro(lote, $"Erro ao processar lote {lote.IdLote}: {ex.Message}");
+                        }
+
+                       
                         _logger.LogInformation("Processamento finalizado com sucesso");
                     }
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Erro durante o processamento dos lotes");
-
-                        await _hubContext.Clients.All.SendAsync("ReceberStatusImportacao", new
-                        {
-                            NomeArquivo = "Processamento",
-                            Status = "ERRO",
-                            DataHora = DateTime.Now,
-                            Mensagem = $"Erro geral: {ex.Message}"
-                        });
+                        await _statusService.EnviarStatusErro(lote, $"Erro inesperado ao processar o lote {lote.IdLote}: {ex.Message}");
                     }
                 });
 
@@ -133,5 +154,24 @@ namespace Projeto_BALG_Import.Controllers
                 return StatusCode(500, new { erro = ex.Message });
             }
         }
+    }
+
+   
+
+    public class StatusImportacao
+    {
+        public long IdUpload { get; set; }
+        public long IdLote { get; set; }
+        public int? IdArquivo { get; set; }
+        public string NomeArquivo { get; set; }
+        public string Etapa { get; set; }
+        public string Status { get; set; }
+        public string Mensagem { get; set; }
+        public DateTime DataHora { get; set; }
+        public int TotalArquivos { get; set; }
+        public int ArquivosProcessados { get; set; }
+        public string Usuario { get;  set; }
+        public DateTime? DataFim { get;  set; }
+        public DateTime DataInicio { get;  set; }
     }
 }

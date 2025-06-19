@@ -1,5 +1,6 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\js\BatchCardsRenderer.js
 wwwroot\js\DevonnoUploader.js
 wwwroot\js\testData.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
@@ -62,5 +63,6 @@ wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
 wwwroot\testData.html
 wwwroot\uploads\1001_PART_202401.CSV
 wwwroot\uploads\1001_PART_202404.CSV
+wwwroot\uploads\1022_BALG_202506.CSV
 wwwroot\uploads\2002_BALG_202402.CSV
 wwwroot\uploads\2002_PART_202401.CSV

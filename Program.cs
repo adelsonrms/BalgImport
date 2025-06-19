@@ -7,6 +7,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.IIS;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Projeto_BALG_Import.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +56,8 @@ builder.Services.AddScoped<TestDataGenerator>();
 builder.Services.AddSingleton<IStorageService, StorageService>();
 builder.Services.AddSingleton<IUploadService, UploadService>();
 builder.Services.AddScoped<IImportacaoService, ImportacaoService>();
+builder.Services.AddScoped<StatusImportacaoService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

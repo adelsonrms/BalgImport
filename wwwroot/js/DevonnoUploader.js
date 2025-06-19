@@ -1,8 +1,53 @@
-﻿// Estado da aplicação
+﻿// Constantes e configurações
+const STATUS_CONFIG = {
+    CONCLUIDO: {
+        text: 'Concluído',
+        class: 'bg-success'
+    },
+    PROCESSANDO: {
+        text: 'Processando',
+        class: 'bg-warning'
+    },
+    ERRO: {
+        text: 'Erro',
+        class: 'bg-danger'
+    },
+    PENDENTE: {
+        text: 'Pendente',
+        class: 'bg-secondary'
+    },
+    CANCELADO: {
+        text: 'Cancelado',
+        class: 'bg-dark'
+    },
+    UPLOADING: {
+        text: 'Enviando',
+        class: 'bg-info'
+    }
+};
+
+// Interface do objeto de status
+const StatusImportacao = {
+    idUpload: null,          // ID do upload
+    idLote: null,           // ID do lote
+    idArquivo: null,        // ID do arquivo
+    nomeArquivo: null,      // Nome do arquivo
+    etapa: null,            // Etapa atual (INICIO, PROCESSANDO, etc)
+    status: null,           // Status atual (INICIADO, PROCESSANDO, etc)
+    mensagem: null,         // Mensagem descritiva
+    dataHora: null,         // Data e hora do status
+    totalArquivos: 0,       // Total de arquivos no lote
+    arquivosProcessados: 0  // Quantidade de arquivos processados
+};
+
+// Estado da aplicação
 const appState = {
     selectedBatchId: null,
     hasProcessingBatches: false,
-    connection: null
+    connection: null,
+    batchErrors: {}, // Armazena erros por idLote
+    lotes: {}, // Armazena lotes processados
+    lotes_uploads: [] // Armazena lotes processados
 };
 
 // Elementos do DOM
@@ -26,6 +71,166 @@ document.addEventListener('DOMContentLoaded', () => {
     initSignalR();
 });
 
+// Função para gerar ID único via backend
+async function generateUniqueIdFromServer() {
+    try {
+        const response = await fetch('/api/ImportacaoApi/gerar-id-unico', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao gerar ID único');
+        }
+
+        const result = await response.json();
+        if (!result.success) {
+            throw new Error(result.erro || 'Erro ao gerar ID único');
+        }
+
+        // Garante que o ID seja um número inteiro
+        const idUnico = parseInt(result.idUnico);
+        console.log(`🔑 ID único gerado pelo servidor: ${idUnico}`);
+        return idUnico;
+    } catch (error) {
+        console.error('Erro ao gerar ID único:', error);
+        throw error;
+    }
+}
+
+// Função para lidar com o upload
+let currentBatchId = null;
+let batchCounter = 1;
+
+async function handleUpload() {
+    if (window.BatchCardsRenderer) {
+        window.BatchCardsRenderer.resetarCards();
+    }
+    const fileInput = document.getElementById('files');
+    const files = Array.from(fileInput.files);
+
+    if (!files.length) {
+        showError('Selecione pelo menos um arquivo.');
+        return;
+    }
+
+    try {
+        // Gera um ID único para todo o upload via backend
+        const idUpload = await generateUniqueIdFromServer();
+        console.log(`🚀 Iniciando upload com ID: ${idUpload}`);
+        console.log(`📦 Total de arquivos: ${files.length}`);
+        appState.lotes = {};
+        appState.lotes_uploads = [];
+        
+        const batchSize = 5;// Math.ceil(files.length / 10); // Quantidade de arquivos por lote no front
+        const totalBatches = Math.ceil(files.length / batchSize);
+
+        console.log(`🗂️ Listando os status atuais em ${totalBatches} lotes de até ${batchSize} arquivos.`);
+
+        // Cria os lotes iniciais
+        const lotes = [];
+
+        for (let i = 0; i < totalBatches; i++) {
+            const start = i * batchSize;
+            const end = start + batchSize;
+            const arquivosLote = files.slice(start, end);
+            
+            // Gera ID único para cada lote via backend
+            const idLote = await generateUniqueIdFromServer();
+
+            // Calcula o tamanho total dos arquivos do lote
+            const tamanhoTotalBytes = arquivosLote.reduce((total, file) => total + file.size, 0);
+
+            // Armazena informações do lote
+            lotes.push({
+                id: idLote,
+                numero: i + 1,
+                arquivos: arquivosLote,
+                totalArquivos: arquivosLote.length,
+                arquivosProcessados: 0,
+                tamanhoTotalBytes: tamanhoTotalBytes
+            });
+
+            var data = {
+                idUpload: idUpload,          // ID do upload
+                idLote: idLote,           // ID do lote
+                idArquivo: null,        // ID do arquivo
+                nomeArquivo: null,      // Nome do arquivo
+                etapa: 'INICIO',            // Etapa atual (INICIO, PROCESSANDO, etc)
+                status: 'AGUARDANDO',           // Status atual (INICIADO, PROCESSANDO, etc)
+                mensagem: '',         // Mensagem descritiva
+                dataHora: new Date().toISOString(),         // Data e hora do status
+                totalArquivos: arquivosLote.length,       // Total de arquivos no lote
+                arquivosProcessados: 0,  // Quantidade de arquivos processados
+                tamanhoTotalBytes: tamanhoTotalBytes  // Tamanho total dos arquivos em bytes
+            }
+
+            processarAtualizacaoStatus(data);
+        }
+
+
+        // 2. Inicia o processamento dos lotes
+        console.log(`🚀 Iniciando processamento dos ${totalBatches} lotes`);
+
+        for (const lote of lotes) {
+            try {
+                appState.lotes_uploads.push(lote);
+
+                // Atualiza status para PROCESSANDO
+                updateBatchStatus(lote.id, 0, lote.totalArquivos, 'PROCESSANDO');
+                
+                // Envia o lote para processamento
+                await uploadBatch(lote.arquivos, lote.numero, totalBatches, idUpload, lote.id);
+                
+                //// Inicia o monitoramento do lote
+                //startProcessingMonitor(lote.id);
+                
+            } catch (error) {
+                console.error(`❌ Erro no lote ${lote.numero}:`, error);
+                updateBatchStatus(lote.id, lote.arquivosProcessados, lote.totalArquivos, 'ERRO');
+                showError(`Erro no lote ${lote.numero}: ${error.message}`);
+                // Continua com o próximo lote ao invés de interromper todo o processo
+            }
+        }
+
+        fileInput.value = '';
+    } catch (error) {
+        console.error('Erro ao gerar IDs únicos:', error);
+        showError(`Erro ao iniciar upload: ${error.message}`);
+
+    }
+}
+
+async function uploadBatch(batch, batchNumber, totalBatches, idUpload, idLote) {
+
+    const formData = new FormData();
+    
+    // Adiciona os arquivos ao FormData
+    batch.forEach(file => {
+        formData.append('arquivos', file);
+    });
+    
+    // Adiciona os IDs ao FormData
+    formData.append('idUpload', idUpload);
+    formData.append('idLote', idLote);
+    formData.append('usuario', document.getElementById('usuario').value);
+
+    const response = await fetch('/api/ImportacaoApi/upload', {
+        method: 'POST',
+        body: formData
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.erro || `Erro no lote ${batchNumber}`);
+    }
+
+    const result = await response.json();
+    console.log(`✅ Lote ${batchNumber}/${totalBatches} enviado com sucesso:`, result);
+}
+
 // Funções de manipulação de eventos
 function updateSelectedFiles() {
     if (fileInput && fileInput.files.length > 0) {
@@ -45,49 +250,6 @@ function updateSelectedFiles() {
     }
 }
 
-// Função para lidar com o upload
-let currentBatchId = null;
-let batchCounter = 1;
-
-async function handleUpload() {
-    const fileInput = document.getElementById('files');
-    const files = fileInput.files;
-
-    if (!files || files.length === 0) {
-        showError('Selecione pelo menos um arquivo');
-        return;
-    }
-
-    try {
-        console.log('Iniciando upload de arquivos...');
-        
-        const formData = new FormData();
-        for (let i = 0; i < files.length; i++) {
-            formData.append('arquivos', files[i]);
-            console.log(`Adicionando arquivo ${i + 1}: ${files[i].name}`);
-        }
-
-        const response = await fetch('/api/ImportacaoApi/upload', {
-            method: 'POST',
-            body: formData
-        });
-
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.erro || 'Erro ao fazer upload');
-        }
-
-        const result = await response.json();
-        console.log('Upload iniciado com sucesso:', result);
-
-        // Limpa o input de arquivos
-        fileInput.value = '';
-    } catch (error) {
-        console.error('Erro no upload:', error);
-        showError(error.message || 'Erro ao fazer upload dos arquivos');
-    }
-}
-
 function addBatchToTable(batchId, totalFiles) {
     const tbody = document.getElementById('batchTableBody');
     const row = document.createElement('tr');
@@ -102,13 +264,16 @@ function addBatchToTable(batchId, totalFiles) {
 }
 
 function updateBatchStatus(batchId, processedFiles, totalFiles, status) {
-    const row = document.getElementById(`batch-${batchId}`);
+    
+    let row = document.querySelector(`#batchTableBody tr[data-batch-id="${batchId}"]`);
+
     if (row) {
         const statusBadge = row.querySelector('.badge');
         const statusText = getStatusText(status);
         const statusClass = getStatusClass(status);
         
-        row.children[1].textContent = `${processedFiles} / ${totalFiles}`;
+        row.children[2].textContent = `${processedFiles} / ${totalFiles}`;
+
         statusBadge.className = `badge ${statusClass}`;
         statusBadge.textContent = statusText;
     }
@@ -153,89 +318,73 @@ function updateFileStatus(fileName, status, error = null) {
 }
 
 function getStatusText(status) {
-    const statusMap = {
-        'CONCLUIDO': 'Concluído',
-        'ERRO': 'Erro',
-        'PROCESSANDO': 'Processando',
-        'PENDENTE': 'Pendente',
-        'CANCELADO': 'Cancelado'
-    };
-    return statusMap[status] || status;
+    if (!status) return 'Desconhecido';
+    return STATUS_CONFIG[status.toUpperCase()]?.text || status;
 }
 
 function getStatusClass(status) {
-    const classMap = {
-        'Uploading': 'bg-info',
-        'PROCESSANDO': 'bg-warning',
-        'CONCLUIDO': 'bg-success',
-        'ERRO': 'bg-danger',
-        'PENDENTE': 'bg-secondary',
-        'CANCELADO': 'bg-dark'
-    };
-    return classMap[status] || 'bg-secondary';
+    if (!status) return 'bg-secondary';
+    return STATUS_CONFIG[status.toUpperCase()]?.class || 'bg-secondary';
 }
 
-async function startProcessingMonitor(batchId) {
-    if (!batchId) {
-        console.error('ID do lote inválido');
-        return;
-    }
+// Função utilitária para formatar duração por extenso
+function formatDuration(start, end) {
+    if (!start || !end) return '-';
+    const ms = Math.abs(new Date(end) - new Date(start));
+    if (isNaN(ms)) return '-';
+    const s = Math.floor(ms / 1000);
+    const min = Math.floor(s / 60);
+    const sec = s % 60;
+    if (min > 0) return `${min} min${min > 1 ? 's' : ''} e ${sec}s`;
+    return `${sec}s`;
+}
 
-    console.log(`Iniciando monitoramento do batch: ${batchId}`);
-
-    const checkStatus = async () => {
-        try {
-            console.log(`Verificando status do batch: ${batchId}`);
-            const response = await fetch(`/Upload/Status/${batchId}`);
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error(`Erro na resposta do servidor: ${errorText}`);
-                throw new Error('Erro ao verificar status');
-            }
-
-            const result = await response.json();
-            if (!result.success) {
-                console.error(`Erro retornado pelo servidor: ${result.error}`);
-                throw new Error(result.error || 'Erro ao verificar status');
-            }
-
-            const batch = result.batch;
-            if (!batch) {
-                console.error('Dados do lote não retornados pelo servidor');
-                throw new Error('Dados do lote não retornados pelo servidor');
-            }
-            
-            console.log(`Status do batch ${batchId}: ${batch.status}`);
-            
-            // Atualiza o status do lote
-            const processedFiles = batch.arquivos.filter(f => f.status === 'CONCLUIDO' || f.status === 'ERRO').length;
-            updateBatchStatus(
-                batchId,
-                processedFiles,
-                batch.arquivos.length,
-                batch.status
-            );
-
-            // Atualiza o status dos arquivos
-            batch.arquivos.forEach(file => {
-                if (!document.getElementById(`file-${file.nomeArquivo}`)) {
-                    addFileToTable(file.nomeArquivo, file.status);
-                }
-                updateFileStatus(file.nomeArquivo, file.status, file.mensagemErro);
-            });
-
-            // Se o lote ainda não foi concluído, continua monitorando
-            if (batch.status !== 'CONCLUIDO' && batch.status !== 'CANCELADO') {
-                setTimeout(checkStatus, 1000);
-            }
-        } catch (error) {
-            console.error('Erro ao monitorar processamento:', error);
-            setTimeout(checkStatus, 5000); // Tenta novamente em 5 segundos
+// Atualiza o estado global de lotes e renderiza os cards
+function processarAtualizacaoStatus(status) {
+    try {
+        if (!status || !status.idLote) {
+            console.error('Status inválido:', status);
+            return;
         }
-    };
-
-    checkStatus();
+        // Inicializa o objeto global de lotes se necessário
+        if (!appState.lotes) appState.lotes = {};
+        // Atualiza ou cria o lote
+        const lote = appState.lotes[status.idLote] || {};
+        // Copia todos os campos relevantes do status para o lote
+        Object.assign(lote, status);
+        // Garante campos obrigatórios
+        lote.idLote = status.idLote;
+        lote.idUpload = status.idUpload;
+        lote.status = status.status;
+        lote.mensagem = status.mensagem;
+        lote.arquivosProcessados = status.arquivosProcessados;
+        lote.totalArquivos = status.totalArquivos;
+        lote.dataInicio = status.dataInicio || status.dataHora || null;
+        lote.dataFim = status.dataFim || null;
+        lote.usuario = status.usuario || '-';
+        // Armazena erros do lote, se houver
+        if (status.status && status.status.toUpperCase() === 'ERRO' && status.mensagem) {
+            if (!appState.batchErrors[status.idLote]) appState.batchErrors[status.idLote] = [];
+            appState.batchErrors[status.idLote].push(status.mensagem);
+        }
+        appState.lotes[status.idLote] = lote;
+        if (window.BatchCardsRenderer) {
+            window.BatchCardsRenderer.atualizarTodosCards(Object.values(appState.lotes), lote);
+        }
+        // Atualização de arquivos individuais permanece igual
+        if (status.idArquivo && status.nomeArquivo) {
+            const fileRow = document.querySelector(`#fileTableBody tr[data-file-id="${status.idArquivo}"]`);
+            if (fileRow) {
+                const statusBadge = fileRow.querySelector('.badge');
+                statusBadge.className = `badge ${getStatusClass(status.status)}`;
+                statusBadge.title = status.mensagem || '';
+                statusBadge.textContent = getStatusText(status.status);
+            }
+        }
+        console.log('Status atualizado com sucesso:', status);
+    } catch (error) {
+        console.error('Erro ao processar atualização de status:', error);
+    }
 }
 
 // Funções de atualização da UI
@@ -264,8 +413,8 @@ function updateInterface() {
                     
                     // Calcula o status do lote com base nos arquivos
                     const batchStatus = getBatchStatus(batch);
-                    const statusClass = getBatchStatusClass(batchStatus);
-                    const statusText = getBatchStatusText(batchStatus);
+                    const statusClass = getStatusClass(batchStatus);
+                    const statusText = getStatusText(batchStatus);
                     
                     // Adiciona classe ativa se for o lote selecionado
                     if (appState.selectedBatchId === batch.id) {
@@ -307,18 +456,16 @@ function updateFileTable(batch) {
     
     batch.arquivos.forEach(arquivo => {
         const row = document.createElement('tr');
-        const statusClass = arquivo.status === 'CONCLUIDO' ? 'bg-success' : 
-                          arquivo.status === 'ERRO' ? 'bg-danger' : 
-                          arquivo.status === 'PROCESSANDO' ? 'bg-warning' : 'bg-secondary';
+        const statusClass = getStatusClass(arquivo.status);
+        const statusText = getStatusText(arquivo.status);
 
-        // Extrai empresa e layout do nome do arquivo
         const [empresa, layout] = arquivo.nomeArquivo.split('_');
 
         row.innerHTML = `
             <td>${arquivo.nomeArquivo}</td>
             <td>${empresa || '-'}</td>
             <td>${layout || '-'}</td>
-            <td><span class="badge ${statusClass}">${getStatusText(arquivo.status)}</span></td>
+            <td><span class="badge ${statusClass}">${statusText}</span></td>
             <td>${formatDate(arquivo.dataInicio)}</td>
             <td>${arquivo.dataFim ? formatDate(arquivo.dataFim) : '-'}</td>
         `;
@@ -334,7 +481,7 @@ function updateFileTable(batch) {
 function formatDate(dateString) {
     if (!dateString) return '-';
     const date = new Date(dateString);
-    return date.toLocaleString('pt-BR');
+    return date.toLocaleTimeString();
 }
 
 function selectBatch(batchId) {
@@ -382,10 +529,12 @@ function formatFileSize(bytes) {
 }
 
 function showError(message) {
+    console.error('Exibindo erro:', message);
     const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
     document.getElementById('errorMessage').textContent = message;
     errorModal.show();
 }
+
 
 async function retomarUpload(batchId, fileName) {
     try {
@@ -419,8 +568,8 @@ function updateBatchTable(batches) {
 
     batches.forEach(batch => {
         const row = document.createElement('tr');
-        const statusClass = getBatchStatusClass(batch.status);
-        const statusText = getBatchStatusText(batch.status);
+        const statusClass = getStatusClass(batch.status);
+        const statusText = getStatusText(batch.status);
         
         row.innerHTML = `
             <td>#${batchCounter++}</td>
@@ -433,80 +582,28 @@ function updateBatchTable(batches) {
     });
 }
 
-function getBatchStatusClass(status) {
-    switch (status) {
-        case 'CONCLUIDO':
-            return 'bg-success';
-        case 'ERRO':
-            return 'bg-danger';
-        case 'PROCESSANDO':
-            return 'bg-warning';
-        case 'CANCELADO':
-            return 'bg-dark';
-        default:
-            return 'bg-secondary';
-    }
-}
-
-function getBatchStatusText(status) {
-    switch (status) {
-        case 'CONCLUIDO':
-            return 'Concluído';
-        case 'ERRO':
-            return 'Erro';
-        case 'PROCESSANDO':
-            return 'Em andamento';
-        case 'CANCELADO':
-            return 'Cancelado';
-        case 'PENDENTE':
-            return 'Pendente';
-        default:
-            return status;
-    }
-}
-
 function getBatchStatus(batch) {
-    // Se não houver arquivos, retorna pendente
     if (!batch.arquivos || batch.arquivos.length === 0) {
         return 'PENDENTE';
     }
 
-    // Conta os arquivos por status
     const statusCount = batch.arquivos.reduce((acc, arquivo) => {
         acc[arquivo.status] = (acc[arquivo.status] || 0) + 1;
         return acc;
     }, {});
 
-    // Se todos os arquivos estão concluídos
-    if (statusCount['CONCLUIDO'] === batch.arquivos.length) {
-        return 'CONCLUIDO';
-    }
-
-    // Se todos os arquivos estão com erro
-    if (statusCount['ERRO'] === batch.arquivos.length) {
-        return 'ERRO';
-    }
-
-    // Se houver pelo menos um arquivo em processamento
-    if (statusCount['PROCESSANDO'] > 0) {
-        return 'PROCESSANDO';
-    }
-
-    // Se houver pelo menos um arquivo pendente
-    if (statusCount['PENDENTE'] > 0) {
-        return 'PENDENTE';
-    }
-
-    // Se houver pelo menos um arquivo com erro
-    if (statusCount['ERRO'] > 0) {
-        return 'ERRO';
-    }
+    if (statusCount['CONCLUIDO'] === batch.arquivos.length) return 'CONCLUIDO';
+    if (statusCount['ERRO'] === batch.arquivos.length) return 'ERRO';
+    if (statusCount['PROCESSANDO'] > 0) return 'PROCESSANDO';
+    if (statusCount['PENDENTE'] > 0) return 'PENDENTE';
+    if (statusCount['ERRO'] > 0) return 'ERRO';
 
     return 'PENDENTE';
 }
 
 // Inicializa a conexão SignalR
 function initSignalR() {
+
     console.log('Inicializando conexão SignalR...');
     
     appState.connection = new signalR.HubConnectionBuilder()
@@ -531,7 +628,7 @@ function initSignalR() {
     // Configura o handler de status
     appState.connection.on("ReceberStatusImportacao", (data) => {
         console.log('SignalR: Status recebido:', data);
-        atualizarTabelas(data);
+        processarAtualizacaoStatus(data);
     });
 
     // Inicia a conexão
@@ -539,7 +636,7 @@ function initSignalR() {
         .then(() => {
             console.log('SignalR: Conexão estabelecida com sucesso');
             // Carrega os dados iniciais apenas uma vez
-            loadInitialData();
+            //loadInitialData();
         })
         .catch(error => {
             console.error('SignalR: Erro ao conectar:', error);
@@ -560,8 +657,8 @@ function loadInitialData() {
                     const row = document.createElement('tr');
                     row.setAttribute('data-batch-id', batch.id);
                     
-                    const statusClass = getBatchStatusClass(batch.status);
-                    const statusText = getBatchStatusText(batch.status);
+                    const statusClass = getStatusClass(batch.status);
+                    const statusText = getStatusText(batch.status);
                     
                     row.innerHTML = `
                         <td>#${batchCounter++}</td>
@@ -588,8 +685,8 @@ function updateFileTableFromData(data) {
 
     data.arquivos.forEach(arquivo => {
         const row = document.createElement('tr');
-        const statusClass = getFileStatusClass(arquivo.status);
-        const statusText = getFileStatusText(arquivo.status);
+        const statusClass = getStatusClass(arquivo.status);
+        const statusText = getStatusText(arquivo.status);
         
         // Extrai empresa e layout do nome do arquivo
         const [empresa, layout] = arquivo.nomeArquivo.split('_');
@@ -607,117 +704,66 @@ function updateFileTableFromData(data) {
     });
 }
 
-function getFileStatusClass(status) {
-    switch (status?.toUpperCase()) {
-        case 'PENDENTE': return 'bg-warning';
-        case 'PROCESSANDO': return 'bg-info';
-        case 'CONCLUIDO': return 'bg-success';
-        case 'ERRO': return 'bg-danger';
-        default: return 'bg-secondary';
+// Atualiza a função de monitoramento para usar a nova função
+async function startProcessingMonitor(batchId) {
+    if (!batchId) {
+        console.error('ID do lote inválido');
+        return;
     }
-}
 
-function getFileStatusText(status) {
-    switch (status?.toUpperCase()) {
-        case 'PENDENTE': return 'Pendente';
-        case 'PROCESSANDO': return 'Processando';
-        case 'CONCLUIDO': return 'Concluído';
-        case 'ERRO': return 'Erro';
-        default: return 'Desconhecido';
-    }
-}
+    console.log(`Iniciando monitoramento do batch: ${batchId}`);
 
-function atualizarTabelas(status) {
-    try {
-        console.log('Atualizando tabelas com status:', status);
+    const checkStatus = async () => {
+        try {
+            console.log(`Verificando status do batch: ${batchId}`);
+            const response = await fetch(`/Upload/Status/${batchId}`);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error(`Erro na resposta do servidor: ${errorText}`);
+                throw new Error('Erro ao verificar status');
+            }
 
-        // Validação dos dados
-        if (!status) {
-            console.error('Status inválido:', status);
-            return;
+            const result = await response.json();
+            if (!result.success) {
+                console.error(`Erro retornado pelo servidor: ${result.error}`);
+                throw new Error(result.error || 'Erro ao verificar status');
+            }
+
+            const batch = result.batch;
+            if (!batch) {
+                console.error('Dados do lote não retornados pelo servidor');
+                throw new Error('Dados do lote não retornados pelo servidor');
+            }
+            
+            processarAtualizacaoStatus(batch);
+
+            // Se o lote ainda não foi concluído, continua monitorando
+            if (batch.status !== 'CONCLUIDO' && batch.status !== 'CANCELADO') {
+                setTimeout(checkStatus, 1000);
+            }
+        } catch (error) {
+            console.error('Erro ao monitorar processamento:', error);
+            setTimeout(checkStatus, 5000); // Tenta novamente em 5 segundos
         }
+    };
 
-        // Atualiza a tabela de lotes
-        const batchTableBody = document.getElementById('batchTableBody');
-        if (!batchTableBody) {
-            console.error('Elemento batchTableBody não encontrado');
-            return;
-        }
-
-        // Procura ou cria a linha do lote
-        let batchRow = document.querySelector(`#batchTableBody tr[data-batch-id="${status.idLote}"]`);
-        if (!batchRow) {
-            batchRow = document.createElement('tr');
-            batchRow.setAttribute('data-batch-id', status.idLote);
-            batchTableBody.insertBefore(batchRow, batchTableBody.firstChild);
-        }
-
-        // Calcula o progresso
-        const totalArquivos = status.totalArquivos || 1;
-        const arquivosProcessados = status.arquivosProcessados || 0;
-        const progresso = Math.round((arquivosProcessados / totalArquivos) * 100);
-
-        // Atualiza os dados do lote
-        const dataHora = status.dataHora ? new Date(status.dataHora).toLocaleString('pt-BR') : '-';
-        const statusClass = getStatusClass(status.status);
-        const statusText = getStatusText(status.status);
-        
-        batchRow.innerHTML = `
-            <td>${status.idUpload || '-'}</td>
-            <td>${status.idLote || '-'}</td>
-            <td>${arquivosProcessados} / ${totalArquivos}</td>
-            <td>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" 
-                         style="width: ${progresso}%" 
-                         aria-valuenow="${progresso}" 
-                         aria-valuemin="0" 
-                         aria-valuemax="100">
-                        ${progresso}%
-                    </div>
-                </div>
-            </td>
-            <td><span class="badge ${statusClass}">${statusText}</span></td>
-            <td>${status.mensagem || '-'}</td>
-            <td>${dataHora}</td>
-        `;
-
-        console.log('Tabela de lotes atualizada com sucesso');
-    } catch (error) {
-        console.error('Erro ao atualizar tabelas:', error);
-    }
+    checkStatus();
 }
 
-function getStatusClass(status) {
-    if (!status) return 'bg-secondary';
-    
-    switch (status.toUpperCase()) {
-        case 'CONCLUIDO':
-            return 'bg-success';
-        case 'PROCESSANDO':
-            return 'bg-warning';
-        case 'ERRO':
-            return 'bg-danger';
-        case 'PENDENTE':
-            return 'bg-secondary';
-        default:
-            return 'bg-secondary';
+// Função para exibir a modal de erros do lote
+function showBatchErrors(idLote) {
+    const errors = appState.batchErrors[idLote] || [];
+    const contentDiv = document.getElementById('batchErrorsContent');
+    if (contentDiv) {
+        if (errors.length === 0) {
+            contentDiv.innerHTML = '<div class="alert alert-success">Nenhum erro registrado para este lote.</div>';
+        } else {
+            contentDiv.innerHTML = '<ul class="list-group">' +
+                errors.map(e => `<li class="list-group-item text-danger"><pre style="white-space: pre-wrap;">${e}</pre></li>`).join('') +
+                '</ul>';
+        }
     }
-}
-
-function getStatusText(status) {
-    if (!status) return 'Desconhecido';
-    
-    switch (status.toUpperCase()) {
-        case 'CONCLUIDO':
-            return 'Concluído';
-        case 'PROCESSANDO':
-            return 'Processando';
-        case 'ERRO':
-            return 'Erro';
-        case 'PENDENTE':
-            return 'Pendente';
-        default:
-            return status;
-    }
+    const modal = new bootstrap.Modal(document.getElementById('batchErrorsModal'));
+    modal.show();
 }
