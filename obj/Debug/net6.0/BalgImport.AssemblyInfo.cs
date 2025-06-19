@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BalgImport")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a3c7f6c8d29aeabaab667090b82ce0074c300cd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e2f653677c7fa87c257074a5b57351c01002a53")]
 [assembly: System.Reflection.AssemblyProductAttribute("BalgImport")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BalgImport")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

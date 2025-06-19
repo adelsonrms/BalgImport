@@ -1,0 +1,863 @@
+@* ========== Views\_ViewImports.cshtml ========== *@
+﻿@using BalgImport
+@using BalgImport.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@* ========== Views\_ViewStart.cshtml ========== *@
+﻿@{
+    Layout = "_Layout";
+}
+
+@* ========== Views\Dashboard\Index.cshtml ========== *@
+@model BalgImport.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard de Importações";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4">Dashboard de Importações</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Lotes</h5>
+                    <h2 class="card-text" id="totalLotes">@Model.Indicadores.TotalLotes</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Arquivos</h5>
+                    <h2 class="card-text" id="totalArquivos">@Model.Indicadores.TotalArquivos</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Arquivos Processados</h5>
+                    <h2 class="card-text" id="arquivosProcessados">@Model.Indicadores.ArquivosProcessados</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Arquivos com Erro</h5>
+                    <h2 class="card-text" id="arquivosComErro">@Model.Indicadores.ArquivosComErro</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Lotes em Andamento</h5>
+                    <h2 class="card-text" id="lotesEmAndamento">@Model.Indicadores.LotesEmAndamento</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Lotes Concluídos</h5>
+                    <h2 class="card-text" id="lotesConcluidos">@Model.Indicadores.LotesConcluidos</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Lotes com Erro</h5>
+                    <h2 class="card-text" id="lotesComErro">@Model.Indicadores.LotesComErro</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Histórico de Importações</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data Criação</th>
+                            <th>Data Início</th>
+                            <th>Data Fim</th>
+                            <th>Usuário</th>
+                            <th>Status</th>
+                            <th>Total Arquivos</th>
+                            <th>Processados</th>
+                            <th>Erros</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lote in Model.Lotes)
+                        {
+                            <tr>
+                                <td>@lote.Id</td>
+                                <td>@lote.DataCriacao.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@(lote.DataInicio?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                                <td>@(lote.DataFim?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                                <td>@lote.UsuarioNome</td>
+                                <td>
+                                    <span class="badge @(lote.Status == "CONCLUIDO" ? "bg-success" : 
+                                                    lote.Status == "ERRO" ? "bg-danger" : 
+                                                    lote.Status == "PROCESSANDO" ? "bg-warning" : "bg-secondary")"
+                                          title="@lote.MensagemErro">
+                                        @(lote.Status == "CONCLUIDO" ? "Concluído" :
+                                          lote.Status == "ERRO" ? "Erro" :
+                                          lote.Status == "PROCESSANDO" ? "Em andamento" :
+                                          lote.Status == "CANCELADO" ? "Cancelado" : "Pendente")
+                                    </span>
+                                </td>
+                                <td>@lote.TotalArquivos</td>
+                                <td>@lote.ArquivosProcessados</td>
+                                <td>@lote.ArquivosComErro</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updateIndicadores() {
+            $.get('/Dashboard/GetIndicadores', function(response) {
+                if (response.success) {
+                    const data = response.data;
+                    $('#totalLotes').text(data.totalLotes);
+                    $('#totalArquivos').text(data.totalArquivos);
+                    $('#arquivosProcessados').text(data.arquivosProcessados);
+                    $('#arquivosComErro').text(data.arquivosComErro);
+                    $('#lotesEmAndamento').text(data.lotesEmAndamento);
+                    $('#lotesConcluidos').text(data.lotesConcluidos);
+                    $('#lotesComErro').text(data.lotesComErro);
+                }
+            });
+        }
+
+        // Atualiza os indicadores a cada 30 segundos
+        setInterval(updateIndicadores, 30000);
+    </script>
+}
+
+@* ========== Views\Home\Index.cshtml ========== *@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@* ========== Views\Home\Privacy.cshtml ========== *@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+@* ========== Views\Importacao\Index.cshtml ========== *@
+@{
+    ViewData["Title"] = "Importação de Arquivos";
+}
+
+<div class="container mt-4">
+    <h2>Importação de Arquivos BALG</h2>
+    
+    <div class="card mt-4">
+        <div class="card-body">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="arquivos" class="form-label">Selecione os arquivos CSV</label>
+                    <input type="file" class="form-control" id="arquivos" name="arquivos" multiple accept=".csv" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="btnUpload">Enviar Arquivos</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            Status da Importação
+        </div>
+        <div class="card-body">
+            <div id="statusContainer">
+                <!-- Os status serão inseridos aqui via JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        // Configuração do SignalR
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/importacaoHub")
+            .withAutomaticReconnect()
+            .build();
+
+        // Iniciar conexão
+        connection.start().catch(err => console.error(err));
+
+        // Receber notificações
+        connection.on("ReceberStatusImportacao", (data) => {
+            const statusHtml = `
+                <div class="alert alert-${data.status === 'ERRO' ? 'danger' : 'info'} mb-2">
+                    <strong>${data.nomeArquivo}</strong><br>
+                    ${data.mensagem}<br>
+                    <small>${new Date(data.dataHora).toLocaleString()}</small>
+                </div>
+            `;
+            document.getElementById('statusContainer').insertAdjacentHTML('afterbegin', statusHtml);
+        });
+
+        // Manipular envio do formulário
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btnUpload = document.getElementById('btnUpload');
+            btnUpload.disabled = true;
+            btnUpload.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...';
+
+            const formData = new FormData();
+            const arquivos = document.getElementById('arquivos').files;
+            
+            for (let i = 0; i < arquivos.length; i++) {
+                formData.append('arquivos', arquivos[i]);
+            }
+
+            try {
+                const response = await fetch('/api/ImportacaoApi/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar arquivos');
+                }
+
+                const result = await response.json();
+                alert(result.mensagem);
+            } catch (error) {
+                alert('Erro: ' + error.message);
+            } finally {
+                btnUpload.disabled = false;
+                btnUpload.innerHTML = 'Enviar Arquivos';
+            }
+        });
+    </script>
+}
+
+@* ========== Views\Shared\Error.cshtml ========== *@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<h3>Development Mode</h3>
+<p>
+    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+</p>
+<p>
+    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
+    It can result in displaying sensitive information from exceptions to end users.
+    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
+    and restarting the app.
+</p>
+
+@* ========== Views\Shared\_Layout.cshtml ========== *@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BalgImport</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BalgImport</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Upload" asp-action="Index">Upload</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - BalgImport
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+@* ========== Views\Shared\_ValidationScriptsPartial.cshtml ========== *@
+﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+@* ========== Views\Upload\Index.cshtml ========== *@
+﻿@{
+    ViewData["Title"] = "Upload de Arquivos";
+}
+
+<div class="container-fluid">
+    <!-- Box de Upload -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Upload de Arquivos</h5>
+        </div>
+        <div class="card-body">
+            <form id="uploadForm" class="row g-3 align-items-end">
+
+                <div class="col-md-2">
+                    <label for="usuario" class="form-label">Usuário</label>
+                    <input type="text" class="form-control" id="usuario" value="@User.Identity.Name">
+                </div>
+
+                <div class="col-md-8">
+                    <label for="files" class="form-label">Selecione os arquivos</label>
+                    <input type="file" class="form-control" id="files" multiple required>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary w-100" onclick="handleUpload()">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cards de Lotes -->
+    <div id="batchCardsContainer" class="row g-2 mb-4">
+        <!-- Card Resumo Geral -->
+        <div class="col-12">
+
+            <div id="cardResumoGeral" class="batch-card" style="border:2px solid #0d6efd; display:none;">
+                <div class="batch-title"><b>Resumo do Upload</b></div>
+                <div class="batch-row" style="margin-bottom:1em;">
+                    <span class="batch-label">Lotes:</span>
+                    <span id="resumo-lote-progresso" class="batch-value">-</span>
+                    <div class="progress" style="width:40%; min-width:120px;">
+                        <div id="resumo-lote-progressbar" class="progress-bar bg-info" style="width:0%"></div>
+                    </div>
+                    <span class="batch-label" style="margin-left:auto;">Hora Início:</span>
+                    <span id="resumo-hora-inicio" class="batch-value">-</span>
+                    <span class="batch-label">Hora Fim:</span>
+                    <span id="resumo-hora-fim" class="batch-value">-</span>
+                    <span class="batch-label">Duração:</span>
+                    <span id="resumo-duracao" class="batch-value">-</span>
+                </div>
+            </div>
+
+
+            @* <div id="cardResumoGeral" class="batch-card" style="border:2px solid #0d6efd; display:none;">
+                <div class="batch-title"><b>Resumo do Upload</b></div>
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <b>Lotes:</b>
+                        <span id="resumo-lote-progresso">-</span>
+                        <div class="progress"
+                            style="height:8px; display:inline-block; width:60%; vertical-align:middle; margin-left:1em;">
+                            <div id="resumo-lote-progressbar" class="progress-bar bg-info" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-end"><b>Hora Início:</b> <span id="resumo-hora-inicio">-</span></div>
+                    <div class="col-md-2 text-end"><b>Hora Fim:</b> <span id="resumo-hora-fim">-</span></div>
+                    <div class="col-md-2 text-end"><b>Duração:</b> <span id="resumo-duracao">-</span></div>
+                </div>
+            </div> *@
+        </div>
+        <!-- Card Lote Atual -->
+        <div class="col-12">
+            <div id="cardLoteAtual" class="batch-card" style="border:2px solid #ffc107; display:none;">
+                <!-- Conteúdo preenchido via JS -->
+            </div>
+            <template id="tpl-lote-atual">
+                <div class="batch-row" style="font-size:1.08em;font-weight:700;color:#2c3e50;margin-bottom:0.5em;">
+                    <span style="color:#0d6efd;">Lote em execução:</span> <b class="tpl-num"></b> (<span
+                        class="tpl-qtd-arq"></span> arquivos)
+                    <span class="batch-label" style="margin-left:1.5em;">Usuário:</span> <span
+                        class="batch-value tpl-usuario"></span>
+                    <span class="batch-label" style="margin-left:1.5em;">Início:</span> <span
+                        class="batch-value tpl-inicio"></span>
+                    <span class="batch-label" style="margin-left:1.5em;">Fim:</span> <span
+                        class="batch-value tpl-fim"></span>
+                    <span class="batch-label" style="margin-left:1.5em;">Duração:</span> <span
+                        class="batch-value tpl-duracao"></span>
+                </div>
+                <div class="batch-row" style="align-items:center;">
+                    <span style="margin-right:2em;" class="tpl-arquivo-atual"></span>
+                    <div class="progress" style="flex:1;max-width:300px;margin:0 1em;">
+                        <div class="progress-bar tpl-bar" role="progressbar" style="width:0%" aria-valuenow="0"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <span class="batch-label">Status:</span>
+                    <span class="badge tpl-status"></span>
+                </div>
+                <div class="batch-row">
+                    <span class="batch-label">Mensagem:</span>
+                    <span class="batch-message tpl-msg"></span>
+                </div>
+            </template>
+        </div>
+        <!-- Histórico de Lotes -->
+        <div class="col-12">
+            <div id="cardHistoricoLotes" style="display:none;">
+                <!-- Cards de lotes finalizados serão inseridos aqui via JS -->
+            </div>
+@* 
+            <template id="tpl-historico-lote">
+                <div class="batch-card mb-2">
+                    <div class="batch-row">
+                        <span class="batch-label">Lote</span>
+                        <span class="batch-value">#<span class="tpl-num"></span></span>
+                        <span class="batch-label">Usuário</span>
+                        <span class="batch-value tpl-usuario"></span>
+                        <span class="batch-label">Início</span>
+                        <span class="batch-value tpl-inicio"></span>
+                        <span class="batch-label">Fim</span>
+                        <span class="batch-value tpl-fim"></span>
+                        <span class="batch-label">Duração</span>
+                        <span class="batch-value tpl-duracao"></span>
+                        <span class="batch-label">Status</span>
+                        <span class="badge tpl-status"></span>
+                        <span class="batch-label">Qtd Arquivos</span>
+                        <span class="batch-value tpl-qtd-arq"></span>
+                    </div>
+                    <div class="batch-row">
+                        <span class="batch-label">Mensagem:</span>
+                        <span class="batch-message tpl-msg"></span>
+                    </div>
+                </div>
+            </template> *@
+
+            <template id="tpl-historico-lote">
+                <div class="batch-card mb-2">
+                    <div class="batch-row" style="font-size:1.05em;font-weight:600;color:#2c3e50;align-items:center;">
+                        <b>Lote #<span class="tpl-num"></span></b>
+                        <span class="batch-label" style="margin-left:1.5em;">Usuário:</span> <span class="batch-value tpl-usuario"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Início:</span> <span class="batch-value tpl-inicio"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Fim:</span> <span class="batch-value tpl-fim"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Duração:</span> <span class="batch-value tpl-duracao"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Status:</span> <span class="badge tpl-status"></span>
+                        <span class="batch-label" style="margin-left:1.5em;">Qtd Arquivos:</span> <span class="tpl-qtd-arq"></span>
+                    </div>
+                    <div class="batch-row">
+                        <span class="batch-label">Mensagem:</span>
+                        <span class="batch-message tpl-msg"></span>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- Tabela de Arquivos (oculta) -->
+    <div class="card d-none">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Arquivos do Lote</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Empresa</th>
+                            <th>Layout</th>
+                            <th>Status</th>
+                            <th>Data Início</th>
+                            <th>Data Fim</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fileTableBody">
+                        <!-- Preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Erro -->
+<div class="modal fade" id="errorModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Erro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="errorMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Erros do Lote -->
+<div class="modal fade" id="batchErrorsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Erros do Lote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="batchErrorsContent">
+                    <!-- Erros detalhados do lote serão exibidos aqui via JS -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+    }
+
+    .table {
+        margin-bottom: 0;
+        font-size: 0.875rem;
+    }
+
+    .table th {
+        background-color: #2c3e50;
+        color: #fff;
+        font-weight: 500;
+        border: none;
+        padding: 0.75rem 1rem;
+    }
+
+    .table td {
+        vertical-align: middle;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(44, 62, 80, 0.05);
+    }
+
+    .progress {
+        height: 8px;
+        border-radius: 4px;
+        background-color: #e9ecef;
+    }
+
+    .progress-bar {
+        background-color: #2c3e50;
+    }
+
+    .badge {
+        padding: 0.5em 0.8em;
+        font-weight: 500;
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+    }
+
+    .btn-primary {
+        background-color: #2c3e50;
+        border-color: #2c3e50;
+    }
+
+    .btn-primary:hover {
+        background-color: #34495e;
+        border-color: #34495e;
+    }
+
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .form-control:focus {
+        border-color: #2c3e50;
+        box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25);
+    }
+
+    .form-label {
+        color: #2c3e50;
+        font-weight: 500;
+    }
+
+    @* .batch-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 1px 4px rgba(44,62,80,0.07);
+        background: #fff;
+        margin-bottom: 0.5rem;
+        font-size: 0.92rem;
+        padding: 1rem 1.2rem;
+        transition: box-shadow 0.2s;
+        min-width: 320px;
+    }
+    .batch-card:hover {
+        box-shadow: 0 2px 8px rgba(44,62,80,0.13);
+    }
+    .batch-card .badge {
+        font-size: 0.85em;
+        cursor: default;
+    }
+    .batch-card .badge.status-error {
+        cursor: pointer;
+        text-decoration: underline dotted;
+    }
+    .batch-card .progress {
+        height: 6px;
+        margin-bottom: 0.5rem;
+    }
+    .batch-card .batch-label {
+        color: #888;
+        font-size: 0.85em;
+        margin-right: 0.5em;
+    }
+    .batch-card .batch-value {
+        font-weight: 500;
+        margin-right: 1.2em;
+    }
+    .batch-card .batch-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 0.3em;
+    }
+    .batch-card .batch-row:last-child {
+        margin-bottom: 0;
+    }
+    .batch-card .batch-title {
+        font-size: 1.08em;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.2em;
+    }
+    .batch-card .batch-message {
+        font-size: 0.93em;
+        color: #666;
+        margin-top: 0.2em;
+    }
+    @@media (max-width: 600px) {
+        .batch-card { font-size: 0.85rem; padding: 0.7rem 0.5rem; }
+        .batch-card .batch-title { font-size: 1em; }
+    } *@
+
+    .batch-card {
+        border: 1.5px solid #e0e0e0;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+        background: #fff;
+        margin-bottom: 1.2rem;
+        font-size: 1rem;
+        padding: 1.3rem 1.5rem;
+        transition: box-shadow 0.2s, border 0.2s;
+        min-width: 280px;
+        max-width: 100%;
+        position: relative;
+    }
+
+    .batch-card:hover {
+        box-shadow: 0 4px 24px rgba(44, 62, 80, 0.13);
+        border-color: #0d6efd;
+    }
+
+    .batch-title {
+        font-size: 1.18em;
+        font-weight: 700;
+        color: #0d6efd;
+        margin-bottom: 0.7em;
+        letter-spacing: 0.5px;
+    }
+
+    .batch-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 0.5em;
+        gap: 1.2em;
+    }
+
+    .batch-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .batch-label {
+        color: #888;
+        font-size: 0.97em;
+        margin-right: 0.4em;
+        font-weight: 500;
+    }
+
+    .batch-value {
+        font-weight: 600;
+        color: #222;
+        margin-right: 1.2em;
+    }
+
+    .badge {
+        padding: 0.45em 1em;
+        font-weight: 600;
+        font-size: 0.98em;
+        border-radius: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .badge.bg-success,
+    .badge.bg-success-light {
+        background: #e6f9ed;
+        color: #1a7f37;
+    }
+
+    .badge.bg-warning,
+    .badge.bg-warning-light {
+        background: #fff8e1;
+        color: #b8860b;
+    }
+
+    .badge.bg-danger,
+    .badge.bg-danger-light {
+        background: #ffeaea;
+        color: #c0392b;
+    }
+
+    .badge.bg-info,
+    .badge.bg-info-light {
+        background: #e7f3fe;
+        color: #0d6efd;
+    }
+
+    .badge.bg-secondary {
+        background: #f4f4f4;
+        color: #555;
+    }
+
+    .progress {
+        height: 10px;
+        border-radius: 5px;
+        background-color: #f0f2f5;
+        box-shadow: none;
+        margin: 0 0.5em;
+        flex: 1 1 120px;
+    }
+
+    .progress-bar {
+        background: linear-gradient(90deg, #0d6efd 60%, #5bc0eb 100%);
+        font-size: 0.9em;
+        font-weight: 600;
+        border-radius: 5px;
+        transition: width 0.4s;
+    }
+
+    @@media
+    (max-width: 900px) {
+        .batch-card {
+            padding: 1rem 0.7rem;
+        }
+
+        .batch-title {
+            font-size: 1.05em;
+        }
+
+        .batch-row {
+            gap: 0.7em;
+        }
+    }
+
+    @@media
+    (max-width: 600px) {
+        .batch-card {
+            font-size: 0.93rem;
+            padding: 0.7rem 0.3rem;
+        }
+
+        .batch-title {
+            font-size: 1em;
+        }
+
+        .batch-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.3em;
+        }
+    }
+</style>
+
+@section Scripts {
+    <script src="~/js/DevonnoUploader.js"></script>
+    <script src="~/js/BatchCardsRenderer.js"></script>
+}
+
